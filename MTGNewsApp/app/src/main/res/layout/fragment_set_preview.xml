@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10sp"
+    android:layout_margin="10sp"
+    tools:menu="@menu/share_menu">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/SetIcon"
+            android:layout_width="55sp"
+            android:layout_height="55sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="20sp"
+            android:layout_marginBottom="20sp"
+            android:contentDescription="Set preview icon"
+            android:scaleType="centerCrop"
+            android:src="@drawable/reload"
+            android:tint="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/SetTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="Set Title"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/SetIcon"
+            app:layout_constraintTop_toTopOf="@+id/SetIcon" />
+
+        <TextView
+            android:id="@+id/ReleaseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Set Release Date"
+            app:layout_constraintBottom_toBottomOf="@+id/SetIcon"
+            app:layout_constraintStart_toStartOf="@+id/SetTitle"
+            app:layout_constraintTop_toBottomOf="@+id/SetTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
