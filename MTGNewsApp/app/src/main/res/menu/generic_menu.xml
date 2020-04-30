@@ -4,9 +4,9 @@
 
     <item
         android:id="@+id/action_feedback"
-        android:icon="@drawable/ic_share"
+        android:icon="@drawable/reload"
         android:iconTint="#000000"
-        android:title="Feedback"
+        android:title="Feedback (Play Store)"
         app:showAsAction="never" />
 
 </menu>

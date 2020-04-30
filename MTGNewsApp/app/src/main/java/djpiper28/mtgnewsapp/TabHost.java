@@ -1,6 +1,5 @@
 package djpiper28.mtgnewsapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -66,6 +65,14 @@ public class TabHost extends Fragment {
             refresh.setOnClickListener(click -> {
             });    //Stops spamming of the FAB.
             refreshNews();
+        });
+
+        LoadingScreen.onRefresh.add(() -> {
+            refresh.setOnClickListener(event -> {
+                refresh.setOnClickListener(click -> {
+                });    //Stops spamming of the FAB.
+                refreshNews();
+            });
         });
 
         DisplayMetrics displayMetrics = new DisplayMetrics();

@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -22,7 +21,7 @@ import static djpiper28.mtgnewsapp.LoadingScreen.onRefresh;
 public class SetPreviewContainer extends Fragment {
 
     private List<Set> sets;
-
+    private static final int max_sets = 5;
 
     public SetPreviewContainer() {
         this.sets = LoadingScreen.sets;
@@ -58,7 +57,7 @@ public class SetPreviewContainer extends Fragment {
                 } else if (set.getReleasedAt().after(twoWeeksAgo) && newSetCount < 5) {
                     releasedSets.add(set);
                     newSetCount++;
-                } else if (newSetCount < 5) {
+                } else if (newSetCount < max_sets) {
                     releasedSets.add(set);
                     newSetCount++;
                 } else {
@@ -101,7 +100,7 @@ public class SetPreviewContainer extends Fragment {
                     } else if (set.getReleasedAt().after(twoWeeksAgo) && i < 5) {
                         releasedSets.add(set);
                         i++;
-                    } else if (i < 5) {
+                    } else if (i < max_sets) {
                         releasedSets.add(set);
                         i++;
                     } else {
@@ -111,6 +110,7 @@ public class SetPreviewContainer extends Fragment {
             }
 
             adapterReleasedSets.notifyDataSetChanged();
+            adapterUnreleasedSets.notifyDataSetChanged();
         });
 
         return view;

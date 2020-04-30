@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     tools:context=".TabHost">
 
     <com.google.android.material.tabs.TabLayout
@@ -25,6 +26,10 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="?attr/actionBarSize"
+        android:animateLayoutChanges="true"
+        android:animationCache="true"
+        android:elevation="1dp"
+        android:overScrollMode="ifContentScrolls"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout">
@@ -38,6 +43,7 @@
         android:layout_marginEnd="32sp"
         android:layout_marginBottom="32sp"
         android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/stat_notify_sync_noanim" />

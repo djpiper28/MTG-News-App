@@ -4,4 +4,5 @@
     <string name="unreleased_sets">Unreleased sets:</string>
     <string name="new_sets">New sets:</string>
     <string name="article_image">Article image</string>
+    <string name="loading_news">Loading news, this may take some time</string>
 </resources>

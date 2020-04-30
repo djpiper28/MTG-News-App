@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_share"
         android:iconTint="#000000"
         android:title="Share"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_reload"

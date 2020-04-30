@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -26,7 +27,7 @@ public class LoadingScreen extends AppCompatActivity {
 
     public static final String[] SocialShares = {"twitter.com", "facebook.com", "instagram.com", "youtube.com", "twitch.tv"};
     public static final String[] Downloadable = {".docx", ".pdf", ".txt"};
-    public static List<Runnable> onRefresh = new LinkedList<>();
+    public static List<Runnable> onRefresh;
     public static List<NewsItem> news;
     public static List<forohfor.scryfall.api.Set> sets;
     public static boolean reloadRequested = false;  // To try to fetch data less
@@ -118,6 +119,8 @@ public class LoadingScreen extends AppCompatActivity {
 
         reloadRequested = false;
 
+         onRefresh = new LinkedList<>();
+
         ProgressBar bar = findViewById(R.id.progressBar);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
@@ -168,7 +171,7 @@ public class LoadingScreen extends AppCompatActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
 

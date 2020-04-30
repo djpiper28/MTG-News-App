@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 public class NewsGetter {
 
@@ -22,7 +23,7 @@ public class NewsGetter {
         List<NewsItem> output = new LinkedList<NewsItem>();
 
         try {
-            Connection conn = Jsoup.connect(site);
+            Connection conn = Jsoup.connect(site/*.replace("langcode", Locale.getDefault().getISO3Language().split("-")[0].toLowerCase())*/);
             Document doc = conn.userAgent(user).get();
 
             Elements items = doc.getElementsByTag("item");
