@@ -1,0 +1,296 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        layout="@layout/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:padding="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:padding="5sp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_margin="5sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5sp"
+                android:textSize="20sp"
+                android:text="@string/news_settings" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5sp"
+                android:padding="10sp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8sp">
+
+                    <TextView
+                        android:id="@+id/news_sources"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5sp"
+                        android:text="@string/news_sources"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <Switch
+                        android:layout_marginTop="5sp"
+                        android:id="@+id/switchDailyMTG"
+                        android:padding="5sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/daily_mtg"
+                        android:checked="true"
+                        app:layout_constraintStart_toStartOf="@id/news_sources"
+                        app:layout_constraintTop_toBottomOf="@id/news_sources" />
+
+                    <Switch
+                        android:layout_marginTop="5sp"
+                        android:id="@+id/switchEDHRec"
+                        android:padding="5sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/EDHREC"
+                        android:checked="false"
+                        app:layout_constraintStart_toStartOf="@id/switchDailyMTG"
+                        app:layout_constraintTop_toBottomOf="@id/switchDailyMTG" />
+
+                    <Switch
+                        android:layout_marginTop="5sp"
+                        android:id="@+id/switchMTGGoldfish"
+                        android:padding="5sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mtg_goldfish"
+                        android:checked="true"
+                        app:layout_constraintStart_toStartOf="@id/switchEDHRec"
+                        app:layout_constraintTop_toBottomOf="@id/switchEDHRec" />
+
+                    <Switch
+                        android:layout_marginTop="5sp"
+                        android:id="@+id/switchSetPreviews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:padding="5sp"
+                        android:text="@string/set_previews"
+                        app:layout_constraintStart_toStartOf="@id/switchMTGGoldfish"
+                        app:layout_constraintTop_toBottomOf="@id/switchMTGGoldfish" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="24sp" />
+
+            <TextView
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5sp"
+                android:layout_margin="5sp"
+                android:text="@string/theme_settings" />
+
+            <!--<androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5sp"
+                android:padding="10sp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8sp"
+                        android:text="@string/primary_colour"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/primaryColourButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8sp"
+                        android:layout_marginEnd="8sp"
+                        android:layout_marginBottom="8sp"
+                        android:textColor="#FFFFFF"
+                        android:background="@color/colorPrimary"
+                        android:text="@string/change_colour"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5sp"
+                android:padding="10sp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8sp"
+                        android:text="@string/accent_colour"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/accentColourButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8sp"
+                        android:layout_marginEnd="8sp"
+                        android:layout_marginBottom="8sp"
+                        android:textColor="#FFFFFF"
+                        android:background="@color/colorAccent"
+                        android:text="@string/change_colour"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>-->
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5sp"
+                android:padding="10sp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/news_card_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8sp"
+                        android:layout_marginTop="8sp"
+                        android:text="@string/news_card_image_size"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/news_card_type"
+                        app:layout_constraintTop_toBottomOf="@id/news_card_type">
+
+                        <RadioButton
+                            android:id="@+id/radioButtonBigImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="@string/big_image" />
+
+                        <RadioButton
+                            android:layout_marginTop="5sp"
+                            android:id="@+id/radioButtonSmallImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/small_image" />
+
+                    </RadioGroup>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="24sp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5sp">
+
+                <Button
+                    android:id="@+id/saveSettings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5sp"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginStart="8sp"
+                    android:layout_marginTop="8sp"
+                    android:layout_marginEnd="8sp"
+                    android:layout_marginBottom="8sp"
+                    android:background="@color/colorAccent"
+                    android:text="@string/save_settings"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/restoreDefaults"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5sp"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginStart="24sp"
+                    android:layout_marginTop="8sp"
+                    android:layout_marginEnd="8sp"
+                    android:layout_marginBottom="8sp"
+                    android:background="@color/colorAccent"
+                    android:text="@string/restore_default"
+                    app:layout_constraintStart_toEndOf="@id/saveSettings"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:layout_marginTop="24sp"
+                    android:id="@+id/cacheReset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/invalidate_cache"
+                    android:padding="5sp"
+                    android:textColor="#FFFFFF"
+                    android:background="@color/colorAccent"
+                    app:layout_constraintStart_toStartOf="@+id/saveSettings"
+                    app:layout_constraintTop_toBottomOf="@+id/saveSettings" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

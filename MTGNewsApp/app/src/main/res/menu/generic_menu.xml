@@ -9,4 +9,18 @@
         android:title="Feedback (Play Store)"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/reload"
+        android:iconTint="#000000"
+        android:title="Settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_view_libs"
+        android:icon="@drawable/reload"
+        android:iconTint="#000000"
+        android:title="Third Party Libraries"
+        app:showAsAction="never" />
+
 </menu>

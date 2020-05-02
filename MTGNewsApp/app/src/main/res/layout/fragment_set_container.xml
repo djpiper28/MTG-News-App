@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:overScrollMode="ifContentScrolls"
     android:animateLayoutChanges="true"
     android:isScrollContainer="true"
-    tools:context=".SetPreviewContainer">
+    android:overScrollMode="ifContentScrolls"
+    tools:context=".newscontainers.SetPreviewContainer">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,31 +15,45 @@
         android:padding="10sp">
 
         <TextView
-            android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10sp"
-            android:text="@string/unreleased_sets" />
+            android:text="@string/unreleased_sets"
+            android:textSize="20sp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/UnreleasedSets"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false" />
+            android:descendantFocusability="blocksDescendants">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/UnreleasedSets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
+        </RelativeLayout>
 
         <TextView
-            android:textSize="20sp"
             android:id="@+id/newSetsLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10sp"
-            android:text="@string/new_sets" />
+            android:text="@string/new_sets"
+            android:textSize="20sp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/NewSets"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false" />
+            android:descendantFocusability="blocksDescendants">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/NewSets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 

@@ -16,6 +16,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Stack;
+
 import static djpiper28.mtgnewsapp.LoadingScreen.Downloadable;
 import static djpiper28.mtgnewsapp.LoadingScreen.SocialShares;
 
@@ -23,6 +25,7 @@ public class CardPreviewActivity extends AppCompatActivity {
 
     public static String url;
     private WebView webView;
+    private Stack<String> urlStack;
 
     private void openLink(String url) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -39,6 +42,8 @@ public class CardPreviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_preview);
 
+        urlStack = new Stack<>();
+
         webView = findViewById(R.id.webView);
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setUseWideViewPort(true);
@@ -49,16 +54,24 @@ public class CardPreviewActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                boolean openedExternally = false;
+
                 for (String socialShare : SocialShares) {
                     if (request.getUrl().toString().contains(socialShare)) {
                         openLink(request.getUrl().toString());
+                        openedExternally = true;
                     }
                 }
 
                 for (String downloadable : Downloadable) {
                     if (request.getUrl().toString().contains(downloadable)) {
                         openLink(request.getUrl().toString());
+                        openedExternally = true;
                     }
+                }
+
+                if(!openedExternally) {
+                    urlStack.push(request.getUrl().toString());
                 }
 
                 view.loadUrl(request.getUrl().toString());
@@ -82,6 +95,15 @@ public class CardPreviewActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        if(urlStack.isEmpty()) {
+            super.onBackPressed();
+        } else{
+            webView.loadUrl(urlStack.pop());
+        }
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
@@ -90,7 +112,7 @@ public class CardPreviewActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.share_menu, menu);
+        getMenuInflater().inflate(R.menu.web_browser_menu, menu);
         return true;
     }
 

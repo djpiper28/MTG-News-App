@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/newsContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10sp"
+    android:paddingTop="12sp"
+    android:paddingBottom="20sp"
+    tools:menu="@menu/web_browser_menu">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/news_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/backgroundImage"
+            android:layout_width="105sp"
+            android:layout_height="105sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/article_image"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/reload"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="130sp"
+            android:layout_marginTop="16dp"
+            android:maxLines="2"
+            android:text="Title Here"
+            android:bufferType="spannable"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/backgroundImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/publishInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8sp"
+            android:maxLines="1"
+            android:text="Publish Info"
+            android:bufferType="spannable"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
+
+        <TextView
+            android:id="@+id/articleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8sp"
+            android:layout_marginEnd="14sp"
+            android:layout_marginStart="130sp"
+            android:layout_marginBottom="16dp"
+            android:autoLink="all|web|phone|none|map|email"
+            android:bufferType="spannable"
+            android:fadeScrollbars="true"
+            android:isScrollContainer="true"
+            android:maxLines="5"
+            android:nestedScrollingEnabled="true"
+            android:text="Article Text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/publishInfo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

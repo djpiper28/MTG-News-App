@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:padding="10sp"
     android:layout_margin="10sp"
-    tools:menu="@menu/share_menu">
+    tools:menu="@menu/web_browser_menu">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -34,20 +34,25 @@
 
         <TextView
             android:id="@+id/SetTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:bufferType="spannable"
+            android:fadeScrollbars="true"
+            android:isScrollContainer="true"
             android:maxLines="2"
+            android:nestedScrollingEnabled="true"
             android:text="Set Title"
             android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/SetIcon"
+            android:paddingLeft="75sp"
+            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/SetIcon" />
 
         <TextView
             android:id="@+id/ReleaseDate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:paddingLeft="75sp"
             android:text="Set Release Date"
             app:layout_constraintBottom_toBottomOf="@+id/SetIcon"
             app:layout_constraintStart_toStartOf="@+id/SetTitle"

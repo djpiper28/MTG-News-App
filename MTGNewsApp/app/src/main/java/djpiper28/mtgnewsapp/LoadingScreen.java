@@ -10,94 +10,194 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import djpiper28.news.NewsGetter;
+import djpiper28.news.DailyMTGNewsGetter;
+import djpiper28.news.EDHRECNewsGetter;
+import djpiper28.news.MTGGoldfishNewsGetter;
 import djpiper28.news.NewsItem;
+import djpiper28.settings.Settings;
+import djpiper28.settings.SettingsActivity;
+import djpiper28.settings.SettingsLoader;
 
 public class LoadingScreen extends AppCompatActivity {
 
     public static final String[] SocialShares = {"twitter.com", "facebook.com", "instagram.com", "youtube.com", "twitch.tv"};
     public static final String[] Downloadable = {".docx", ".pdf", ".txt"};
     public static List<Runnable> onRefresh;
-    public static List<NewsItem> news;
+    public static List<NewsItem> dailyMTGNews, EDHRECNews, MTGGoldfishNews;
     public static List<forohfor.scryfall.api.Set> sets;
     public static boolean reloadRequested = false;  // To try to fetch data less
 
-    private void error(String errorMessage) {
-        Log.e("LoadingScreen", "error: " + errorMessage);
-
-        ErrorFragment fragmentActivity = ErrorFragment.newInstance(errorMessage);
-        addFragment(fragmentActivity);
-    }
-
-    private void addFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().add(R.id.errors, fragment).commit();
-    }
-
     public static void loadNews(ProgressBar bar) {
-        if (reloadRequested || news == null || sets == null) {
+        Settings settings = SettingsLoader.getSettingsLoader().getSettings();
+        if (reloadRequested || settings.cacheUpdateRequired()) {
             reloadRequested = false;
-            news = new LinkedList<>();
 
-            NewsGetter newsGetter = null;
-            boolean gotNews = false;
             int a = 0;
 
-            while (!gotNews && a < 5) {
-                try {
-                    newsGetter = new NewsGetter();
-                    if(bar != null) {
-                        news = newsGetter.getNews((int articles, int max) -> {
-                            bar.setProgress(100 * (articles / max));
-                        });
-                    }
-                    gotNews = true;
-                } catch (final Exception e) {
-                    e.printStackTrace();
+            if (settings.isDailyMTGEnabled()) {
+                dailyMTGNews = new LinkedList<>();
 
-                    // Wait and hope the internet starts to work after the wait
+                DailyMTGNewsGetter newsGetter = null;
+                boolean gotNews = false;
+
+                while (!gotNews && a < 5) {
                     try {
-                        Thread.sleep(20);
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
+                        newsGetter = new DailyMTGNewsGetter();
+                        if (bar != null) {
+                            dailyMTGNews = newsGetter.getNews((int articles, int max) -> {
+                                bar.setProgress(100 * (articles / max));
+                            });
+                        }
+                        gotNews = true;
+                    } catch (final Exception e) {
+                        e.printStackTrace();
+
+                        // Wait and hope the internet starts to work after the wait
+                        try {
+                            Thread.sleep(120);
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
                     }
+                    a++;
                 }
-                a++;
+
+                if(dailyMTGNews == null || !gotNews) {
+                    dailyMTGNews = settings.getDailyMTGNews();
+                } else{
+                    settings.setDailyMTGNews(dailyMTGNews);
+                }
             }
 
-            a = 0;
-            boolean gotSets = false;
-            while (!gotSets && a < 5) {
-                try {
-                    Log.i("info", "loadNews: trying to load sets");
-                    sets = forohfor.scryfall.api.MTGCardQuery.getSets();
-                    gotSets = true;
-                } catch (final Exception e) {
-                    e.printStackTrace();
+            if (settings.isMTGGoldfishEnabled()) {
+                MTGGoldfishNews = new LinkedList<>();
 
-                    // Wait and hope the internet starts to work after the wait
+                MTGGoldfishNewsGetter newsGetter = null;
+                boolean gotNews = false;
+
+                while (!gotNews && a < 5) {
                     try {
-                        Thread.sleep(20);
-                    } catch (InterruptedException ex) {
-                        Log.i("info", "loadNews: failed to load sets");
-                        ex.printStackTrace();
+                        newsGetter = new MTGGoldfishNewsGetter();
+                        if (bar != null) {
+                            MTGGoldfishNews = newsGetter.getNews((int articles, int max) -> {
+                                bar.setProgress(100 * (articles / max));
+                            });
+                        }
+                        gotNews = true;
+                    } catch (final Exception e) {
+                        e.printStackTrace();
+
+                        // Wait and hope the internet starts to work after the wait
+                        try {
+                            Thread.sleep(120);
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
                     }
+                    a++;
                 }
-                a++;
+
+                if(MTGGoldfishNews == null || !gotNews) {
+                    MTGGoldfishNews = settings.getMTGGoldfishNews();
+                } else{
+                    settings.setMTGGoldfishNews(MTGGoldfishNews);
+                }
             }
+
+            if (settings.isEdhrecEnabled()) {
+                EDHRECNews = new LinkedList<>();
+
+                EDHRECNewsGetter newsGetter = null;
+                boolean gotNews = false;
+
+                while (!gotNews && a < 5) {
+                    try {
+                        newsGetter = new EDHRECNewsGetter();
+                        if (bar != null) {
+                            EDHRECNews = newsGetter.getNews((int articles, int max) -> {
+                                bar.setProgress(100 * (articles / max));
+                            });
+                        }
+                        gotNews = true;
+                    } catch (final Exception e) {
+                        e.printStackTrace();
+
+                        // Wait and hope the internet starts to work after the wait
+                        try {
+                            Thread.sleep(120);
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                    a++;
+                }
+
+                if(EDHRECNews == null || !gotNews) {
+                    EDHRECNews = settings.getEDHRECNews();
+                } else{
+                    settings.setEDHRECNews(EDHRECNews);
+                }
+            }
+
+            if (settings.isSetPreviewsEnabled()) {
+                a = 0;
+                boolean gotSets = false;
+                while (!gotSets && a < 5) {
+                    try {
+                        Log.i("info", "loadNews: trying to load sets");
+                        sets = forohfor.scryfall.api.MTGCardQuery.getSets();
+                        gotSets = true;
+                    } catch (final Exception e) {
+                        e.printStackTrace();
+
+                        // Wait and hope the internet starts to work after the wait
+                        try {
+                            Thread.sleep(120);
+                        } catch (InterruptedException ex) {
+                            Log.i("info", "loadNews: failed to load sets");
+                            ex.printStackTrace();
+                        }
+                    }
+                    a++;
+                }
+
+                if (sets == null || !gotSets) {
+                    sets = settings.getSets();
+                } else{
+                    settings.setSets(sets);
+                }
+            }
+        } else {
+            sets = settings.getSets();
+            dailyMTGNews = settings.getDailyMTGNews();
+            EDHRECNews = settings.getEDHRECNews();
+            MTGGoldfishNews = settings.getMTGGoldfishNews();
         }
 
-        for(Runnable runnable: onRefresh) {
-            runnable.run();
+        try {
+            SettingsLoader.getSettingsLoader().saveSettings(bar.getContext());
+            Log.i("info", "loadNews: "+settings.toStringNice());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for (Runnable runnable : onRefresh) {
+            try {
+                runnable.run();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
             //(new Thread(runnable)).start();
         }
     }
@@ -118,40 +218,33 @@ public class LoadingScreen extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         reloadRequested = false;
+        onRefresh = new LinkedList<>();
 
-         onRefresh = new LinkedList<>();
+        try {
+            SettingsLoader settingsLoader = new SettingsLoader(this); // Loads settings
+            settingsLoader = SettingsLoader.getSettingsLoader();
+            Settings settings = settingsLoader.getSettings();
+            Log.i("info", "onCreate: "+settings.toStringNice());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         ProgressBar bar = findViewById(R.id.progressBar);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
                 != PackageManager.PERMISSION_GRANTED) {
             Log.e("Error", "No permission to access internet");
-            error("Error - no internet permission");
+            Toast.makeText(this, "Error - no internet permission", Toast.LENGTH_LONG);
         } else {
             (new Thread(() -> {
                 Log.i("Loading Screen", "Started loading");
                 loadNews(bar);
                 Log.i("Loading Screen", "Finished loading");
 
-                if (news != null && sets != null) {
-                    TabHost tabHost = new TabHost();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.tabHostContainer, tabHost).commit();
+                TabHost tabHost = new TabHost();
+                getSupportFragmentManager().beginTransaction().replace(R.id.tabHostContainer, tabHost).commit();
 
-                    Log.i("Loading Screen", "Started tabhost");
-                } else {
-                    Log.i("Loading Screen", "Failed loading");
-                    bar.setProgress(0);
-                    StringBuilder sb = new StringBuilder();
-
-                    if (news == null) {
-                        sb.append("news=null ");
-                    }
-                    if (sets == null) {
-                        sb.append("sets=null ");
-                    }
-
-                    error("Unable to load details: " + sb.toString());
-                }
+                Log.i("Loading Screen", "Started tabhost");
             })).start();
         }
     }
@@ -162,6 +255,16 @@ public class LoadingScreen extends AppCompatActivity {
             case R.id.action_feedback:
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=djpiper28.mtgnewsapp"));
                 startActivity(browserIntent);
+                return true;
+
+            case R.id.action_settings:
+                Intent openSettings = new Intent(this, SettingsActivity.class);
+                startActivity(openSettings);
+                return true;
+
+            case R.id.action_view_libs:
+                Intent viewLibs = new Intent(this, ThirdPartyLibraries.class);
+                startActivity(viewLibs);
                 return true;
 
             default:

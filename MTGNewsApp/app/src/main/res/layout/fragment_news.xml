@@ -8,7 +8,7 @@
     android:layout_margin="10sp"
     android:paddingTop="12sp"
     android:paddingBottom="20sp"
-    tools:menu="@menu/share_menu">
+    tools:menu="@menu/web_browser_menu">
 
     <ImageView
         android:id="@+id/backgroundImage"

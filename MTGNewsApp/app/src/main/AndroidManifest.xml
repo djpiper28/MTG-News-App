@@ -15,12 +15,39 @@
         android:theme="@style/AppTheme">
 
         <activity
+            android:name=".ThirdPartyLibraries"
+            android:clearTaskOnLaunch="true"
+            android:label="@string/third_party_libraries"
+            android:resizeableActivity="true"
+            android:screenOrientation="fullUser">
+            <layout
+                android:defaultWidth="600dp"
+                android:defaultHeight="500dp"
+                android:gravity="top|end"
+                android:minWidth="300dp"
+                android:minHeight="450dp" />
+        </activity>
+
+        <activity
+            android:name="djpiper28.settings.SettingsActivity"
+            android:clearTaskOnLaunch="true"
+            android:label="@string/title_activity_settings"
+            android:resizeableActivity="true"
+            android:screenOrientation="fullUser">
+            <layout
+                android:defaultWidth="600dp"
+                android:defaultHeight="500dp"
+                android:gravity="top|end"
+                android:minWidth="300dp"
+                android:minHeight="450dp" />
+        </activity>
+
+        <activity
             android:name=".CardPreviewActivity"
             android:clearTaskOnLaunch="true"
             android:label="MTG News App - Card Previews"
             android:resizeableActivity="true"
-            android:screenOrientation="fullUser"
-            android:supportsPictureInPicture="true">
+            android:screenOrientation="fullUser">
             <layout
                 android:defaultWidth="600dp"
                 android:defaultHeight="500dp"
@@ -34,8 +61,7 @@
             android:clearTaskOnLaunch="true"
             android:label="MTG News App - View Article"
             android:resizeableActivity="true"
-            android:screenOrientation="fullUser"
-            android:supportsPictureInPicture="true">
+            android:screenOrientation="fullUser">
             <layout
                 android:defaultWidth="600dp"
                 android:defaultHeight="500dp"
@@ -49,19 +75,20 @@
             android:clearTaskOnLaunch="true"
             android:label="@string/app_name"
             android:resizeableActivity="true"
-            android:screenOrientation="fullUser"
-            android:supportsPictureInPicture="true">
+            android:screenOrientation="fullUser">
             <layout
                 android:defaultWidth="600dp"
                 android:defaultHeight="500dp"
                 android:gravity="top|end"
                 android:minWidth="300dp"
                 android:minHeight="450dp" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
     </application>

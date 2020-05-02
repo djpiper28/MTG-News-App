@@ -1,7 +1,6 @@
 package djpiper28.mtgnewsapp;
 
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,13 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+
+import djpiper28.mtgnewsapp.newscontainers.DailyMTGNewsContainerFragment;
+import djpiper28.mtgnewsapp.newscontainers.EDHRECNewsContainerFragment;
+import djpiper28.mtgnewsapp.newscontainers.MTGGoldfishNewsContainerFragment;
+import djpiper28.mtgnewsapp.newscontainers.SetPreviewContainer;
+import djpiper28.settings.Settings;
+import djpiper28.settings.SettingsLoader;
 
 public class TabHost extends Fragment {
 
@@ -51,10 +57,29 @@ public class TabHost extends Fragment {
 
         TabAdapter adapter = new TabAdapter(getChildFragmentManager());
 
-        Log.i("TabHost", "Loading news viewer");
-        adapter.addFragment(new NewsContainerFragment(), "News");
-        Log.i("TabHost", "Loading set viewer");
-        adapter.addFragment(new SetPreviewContainer(), "Set Previews");
+        Settings settings = SettingsLoader.getSettingsLoader().getSettings();
+
+        if(settings.isDailyMTGEnabled()) {
+            Log.i("TabHost", "Loading dailymtg news viewer");
+            adapter.addFragment(new DailyMTGNewsContainerFragment(), "Daily MTG");
+
+        }
+
+        if(settings.isEdhrecEnabled()) {
+            Log.i("TabHost", "Loading edhrec news viewer");
+            adapter.addFragment(new EDHRECNewsContainerFragment(), "EDHREC");
+        }
+
+        if(settings.isMTGGoldfishEnabled()) {
+            Log.i("TabHost", "Loading mtg goldfish news viewer");
+            adapter.addFragment(new MTGGoldfishNewsContainerFragment(), "MTGGOLDFISH");
+
+        }
+
+        if(settings.isSetPreviewsEnabled()) {
+            Log.i("TabHost", "Loading set viewer");
+            adapter.addFragment(new SetPreviewContainer(), "Set Previews");
+        }
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -74,15 +99,6 @@ public class TabHost extends Fragment {
                 refreshNews();
             });
         });
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-        int width = displayMetrics.widthPixels;
-
-        if (width > height) {
-            viewPager.setPadding(120, 0, 120, 0);
-        }
 
         Log.i("Tab Host", "Finished loading");
 
