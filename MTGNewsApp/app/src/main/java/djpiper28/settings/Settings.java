@@ -11,7 +11,7 @@ import forohfor.scryfall.api.Set;
 
 public class Settings {
 
-    private static long updateEvery = 6L * 36000L;
+    private static long updateEvery = 6L * 60L * 60L * 1000L;
     //TODO: add theme change support
     //private Color primaryColour, primaryColourDark, accentColour;
     private boolean useCardsForNews;
@@ -206,6 +206,10 @@ public class Settings {
                     (isMTGGoldfishEnabled() && MTGGoldfishNews == null) ||
                     (isSetPreviewsEnabled() && sets == null);
         }
+    }
+
+    public boolean isValid() {
+        return updateEvery > 0 && dailyMTGNews!=null && EDHRECNews!=null && MTGGoldfishNews!=null && sets!=null;
     }
 
 }

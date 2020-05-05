@@ -40,6 +40,7 @@ public class LoadingScreen extends AppCompatActivity {
 
     public static void loadNews(ProgressBar bar) {
         Settings settings = SettingsLoader.getSettingsLoader().getSettings();
+
         if (reloadRequested || settings.cacheUpdateRequired()) {
             reloadRequested = false;
 
@@ -222,9 +223,8 @@ public class LoadingScreen extends AppCompatActivity {
 
         try {
             SettingsLoader settingsLoader = new SettingsLoader(this); // Loads settings
-            settingsLoader = SettingsLoader.getSettingsLoader();
-            Settings settings = settingsLoader.getSettings();
-            Log.i("info", "onCreate: "+settings.toStringNice());
+
+            Log.i("info", "onCreate: "+settingsLoader.getSettings().toStringNice());
         } catch (IOException e) {
             e.printStackTrace();
         }

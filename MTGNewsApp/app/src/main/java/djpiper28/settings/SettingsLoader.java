@@ -1,6 +1,8 @@
 package djpiper28.settings;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -17,25 +19,31 @@ public class SettingsLoader {
     private static SettingsLoader settingsLoader;
     private Settings settings;
 
+    @SuppressLint("Assert")
     public SettingsLoader(Context context) throws IOException {
         settingsLoader = this;
         boolean readSettings = settingsFileExists(context);
+
         if (readSettings) {
             try {
                 settings = readSettingsFile(context);
+                Log.i("info", "SettingsLoader: read settings from file");
+                if (settings == null) throw new NullPointerException();
             } catch (Exception e) {
+                Log.i("info", "SettingsLoader: error reading settings from file");
                 e.printStackTrace();
                 readSettings = false;
             }
         }
 
         if (!readSettings) {
-            Settings temp = new Settings();
-            temp.applyDefaultSettings();
+            Log.i("info", "SettingsLoader: making new settings object");
+            settings = new Settings();
+            settings.applyDefaultSettings();
             saveSettings(context);
-
-            settings = temp;
         }
+
+        if (settings==null || settingsLoader==null) throw new NullPointerException();
     }
 
     public static SettingsLoader getSettingsLoader() {
@@ -51,6 +59,8 @@ public class SettingsLoader {
     }
 
     public void saveSettings(Context context) throws IOException {
+        Log.i("info", "SettingsLoader:saving settings");
+
         // Make new file
         File file = new File(context.getFilesDir(), filename);
         if (!file.exists()) {
@@ -67,6 +77,8 @@ public class SettingsLoader {
         FileOutputStream fileOutputStream = new FileOutputStream(file, false);
         fileOutputStream.write(dataToWrite.getBytes());
         fileOutputStream.close();
+
+        Log.i("info", "SettingsLoader:saved settings");
     }
 
     private boolean settingsFileExists(Context context) throws IOException {

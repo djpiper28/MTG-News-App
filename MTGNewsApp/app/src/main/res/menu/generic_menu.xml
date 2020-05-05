@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_feedback"
-        android:icon="@drawable/reload"
-        android:iconTint="#000000"
-        android:title="Feedback (Play Store)"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/action_settings"
         android:icon="@drawable/reload"
         android:iconTint="#000000"
         android:title="Settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_feedback"
+        android:icon="@drawable/reload"
+        android:iconTint="#000000"
+        android:title="Feedback (Play Store)"
         app:showAsAction="never" />
 
     <item

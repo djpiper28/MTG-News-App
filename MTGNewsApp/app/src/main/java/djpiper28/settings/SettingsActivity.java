@@ -73,6 +73,8 @@ public class SettingsActivity extends AppCompatActivity {
                 LoadingScreen.loadNews(null);
                 LoadingScreen.reloadRequested = false;
             })).start();
+
+            Toast.makeText(this, "Cache invalidated and deleted", Toast.LENGTH_LONG).show();
         });
 
         // Reset Button

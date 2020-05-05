@@ -11,19 +11,19 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class DailyMTGNewsGetter implements NewsGetterInterface {
 
     private static final String siteRoot = "https://magic.wizards.com";
-    private static final String site = "https://magic.wizards.com/en/rss/rss.xml?tags=Daily%20MTG&lang=en";
-    private static final String user = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:73.0) Gecko/20100101 Firefox/73.0";
+    private static final String site = "https://magic.wizards.com/rss/rss.xml?tags=Daily%20MTG&lang=en";
 
     public List<NewsItem> getNews(NewsProgressListener listener) throws IOException {
         List<NewsItem> output = new LinkedList<NewsItem>();
 
         try {
             Connection conn = Jsoup.connect(site/*.replace("langcode", Locale.getDefault().getISO3Language().split("-")[0].toLowerCase())*/);
-            Document doc = conn.userAgent(user).get();
+            Document doc = conn/*.userAgent(user)*/.get();
 
             Elements items = doc.getElementsByTag("item");
 

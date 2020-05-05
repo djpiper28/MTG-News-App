@@ -16,14 +16,13 @@ import java.util.List;
 public class MTGGoldfishNewsGetter implements NewsGetterInterface {
 
         private static final String site = "https://www.mtggoldfish.com/feed";
-        private static final String user = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:73.0) Gecko/20100101 Firefox/73.0";
 
         public List<NewsItem> getNews(NewsProgressListener listener) throws IOException {
             List<NewsItem> output = new LinkedList<NewsItem>();
 
             try {
                 Connection conn = Jsoup.connect(site/*.replace("langcode", Locale.getDefault().getISO3Language().split("-")[0].toLowerCase())*/);
-                Document doc = conn.userAgent(user).get();
+                Document doc = conn/*.userAgent(user)*/.get();
 
                 Elements items = doc.getElementsByTag("entry");
 
@@ -41,7 +40,7 @@ public class MTGGoldfishNewsGetter implements NewsGetterInterface {
 
                         output.add(new NewsItem(item.getElementsByTag("title").get(0).text(), description,
                                 item.getElementsByTag("name").get(0).text(),
-                                item.getElementsByTag("published").get(0).text().replace("T"," at "),
+                                item.getElementsByTag("published").get(0).text().replace("T"," at ").replace("Z", ""),
                                 item.getElementsByTag("url").text(), imageURL));
                     } catch (Exception e) {
                         e.printStackTrace();
