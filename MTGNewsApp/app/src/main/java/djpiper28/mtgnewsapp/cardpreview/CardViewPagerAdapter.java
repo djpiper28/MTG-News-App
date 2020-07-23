@@ -1,14 +1,15 @@
 package djpiper28.mtgnewsapp.cardpreview;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,21 +17,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
 import java.util.List;
 
 import djpiper28.mtgnewsapp.CardPreviewActivity;
 import djpiper28.mtgnewsapp.R;
-import djpiper28.settings.Settings;
 import djpiper28.settings.SettingsLoader;
 import forohfor.scryfall.api.Card;
 
 public class CardViewPagerAdapter extends RecyclerView.Adapter<CardViewPagerAdapter.ViewHolder> {
 
-    private LayoutInflater mInflater;
+    private final LayoutInflater mInflater;
     private ItemClickListener mClickListener;
-    private Card card;
+    private final Card card;
 
     // data is passed into the constructor
     public CardViewPagerAdapter(Context context, Card card) {
@@ -61,7 +60,7 @@ public class CardViewPagerAdapter extends RecyclerView.Adapter<CardViewPagerAdap
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        if(position == 1) {
+        if (position == 1) {
             TextView cardName = holder.itemView.findViewById(R.id.card_name);
             cardName.setText(card.getName());
 
@@ -90,9 +89,18 @@ public class CardViewPagerAdapter extends RecyclerView.Adapter<CardViewPagerAdap
             TextView cardName = holder.itemView.findViewById(R.id.card_name);
             cardName.setText(card.getName());
 
+            // Set max sizes
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            ((Activity) holder.itemView.getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            int height = (int) (displayMetrics.heightPixels * 0.9f);
+            int width = displayMetrics.widthPixels;
+            image.setMaxHeight(height);
+            image.setMaxWidth(width);
+
+            // Use smallish images to save space
             Glide
                     .with(holder.itemView)
-                    .load(card.getImageURI("png"))
+                    .load(card.getImageURI("normal"))
                     .placeholder(R.drawable.reload)
                     .into(image);
         }

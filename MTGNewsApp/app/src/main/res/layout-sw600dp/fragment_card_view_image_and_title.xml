@@ -6,6 +6,7 @@
     android:padding="8sp"
     android:layout_marginBottom="16sp"
     android:layout_marginTop="16sp"
+    android:layout_weight="1"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,13 +30,13 @@
             android:id="@+id/card_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="250sp"
+            android:layout_marginTop="16sp"
+            android:layout_marginEnd="250sp"
             android:layout_marginBottom="16dp"
             android:contentDescription="@string/card_image"
             android:adjustViewBounds="true"
+            android:layout_weight="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

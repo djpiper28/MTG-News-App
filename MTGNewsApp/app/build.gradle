@@ -11,7 +11,7 @@ android {
         // 21 for lambda
         targetSdkVersion 29
         versionCode 120
-        versionName "1.2.0"
+        versionName "V1.2.0-beta-0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

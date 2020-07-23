@@ -2,7 +2,6 @@ package djpiper28.mtgnewsapp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -38,6 +37,7 @@ public class RecycleViewerAdapterSets extends RecyclerView.Adapter<RecycleViewer
     private List<Set> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private boolean openingTab = false;
 
     // data is passed into the constructor
     public RecycleViewerAdapterSets(Context context, List<Set> data) {
@@ -96,21 +96,28 @@ public class RecycleViewerAdapterSets extends RecyclerView.Adapter<RecycleViewer
         CardView viewPreviews = view.findViewById(R.id.CardView);
         viewPreviews.setOnClickListener(event -> {
             CardSearchAndSorter.resetCache();
+            if (!openingTab) {
+                openingTab = true;
+                // Run immediately to assert that no rapid spamming can open many threads
 
-            (new Thread(() -> {
-                try {
-                    CardPreviewHostActivity.set = set;
-                    CardPreviewHostActivity.cards = MTGCardQuery.search("set:" + set.getCode());
+                (new Thread(() -> {
+                    try {
+                        CardPreviewHostActivity.set = set;
+                        CardPreviewHostActivity.cards = MTGCardQuery.search("set:" + set.getCode());
 
-                    Log.i("Intent Change", "Changing to set preview view, " + CardPreviewHostActivity.cards.size() + " cards set:" + set.getCode());
+                        Log.i("Intent Change", "Changing to set preview view, " + CardPreviewHostActivity.cards.size() + " cards set:" + set.getCode());
 
-                    Intent intent = new Intent(parent.itemView.getContext(), CardPreviewHostActivity.class);
-                    parent.itemView.getContext().startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(parent.itemView.getContext(), "Error viewing set.", Toast.LENGTH_LONG).show();
-                }
-            })).start();
+                        Intent intent = new Intent(parent.itemView.getContext(), CardPreviewHostActivity.class);
+                        parent.itemView.getContext().startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(parent.itemView.getContext(), "Error viewing set.", Toast.LENGTH_LONG).show();
+                    }
+
+                    openingTab = false;
+
+                })).start();
+            }
         });
     }
 

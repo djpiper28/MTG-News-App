@@ -27,7 +27,7 @@ public class ThirdPartyLibraries extends AppCompatActivity {
         // ReleasedSets
         RecyclerView viewer = findViewById(R.id.recyclerViewThirdPartyLibraries);
         viewer.setLayoutManager(new LinearLayoutManager(this));
-        RecycleViewAdapter3rdPartyLibraries adapter = new RecycleViewAdapter3rdPartyLibraries(this, Library.getDefaultList());
+        RecycleViewAdapter3rdPartyLibraries adapter = new RecycleViewAdapter3rdPartyLibraries(this, ExternalLibraries.getDefaultList());
         viewer.setAdapter(adapter);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);

@@ -18,12 +18,12 @@ import djpiper28.settings.SettingsLoader;
 
 public class RecycleViewAdapter3rdPartyLibraries extends RecyclerView.Adapter<RecycleViewAdapter3rdPartyLibraries.ViewHolder> {
 
-    private List<Library> mData;
+    private List<ExternalLibraries> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public RecycleViewAdapter3rdPartyLibraries(Context context, List<Library> data) {
+    public RecycleViewAdapter3rdPartyLibraries(Context context, List<ExternalLibraries> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -60,7 +60,7 @@ public class RecycleViewAdapter3rdPartyLibraries extends RecyclerView.Adapter<Re
     }
 
     // convenience method for getting data at click position
-    public Library getItem(int id) {
+    public ExternalLibraries getItem(int id) {
         return mData.get(id);
     }
 
