@@ -13,14 +13,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import djpiper28.mtgnewsapp.R;
+
 public class SettingsLoader {
 
     private final static String filename = "settings-mtg-news-app.json";
     private static SettingsLoader settingsLoader;
     private Settings settings;
+    private boolean darkModeApplied;
 
     @SuppressLint("Assert")
     public SettingsLoader(Context context) throws IOException {
+        darkModeApplied = false;
         settingsLoader = this;
         boolean readSettings = settingsFileExists(context);
 
@@ -28,7 +32,7 @@ public class SettingsLoader {
             try {
                 settings = readSettingsFile(context);
                 Log.i("info", "SettingsLoader: read settings from file");
-                if (settings == null) throw new NullPointerException();
+                if (settings == null || settings.outdatedSettings()) throw new NullPointerException();
             } catch (Exception e) {
                 Log.i("info", "SettingsLoader: error reading settings from file");
                 e.printStackTrace();
@@ -39,8 +43,21 @@ public class SettingsLoader {
         if (!readSettings) {
             Log.i("info", "SettingsLoader: making new settings object");
             settings = new Settings();
-            settings.applyDefaultSettings();
+            settings.applyDefaultSettings(context);
             saveSettings(context);
+        }
+
+        if(!darkModeApplied) {
+            settings.applyDarkMode();
+            darkModeApplied = true;
+        }
+
+        if(settings.getPrimaryColour() == 0) {
+            settings.setPrimaryColour(R.color.colorPrimary);
+        }
+
+        if(settings.getAccentColour() == 0) {
+            settings.setAccentColour(R.color.colorAccent);
         }
 
         if (settings==null || settingsLoader==null) throw new NullPointerException();
@@ -60,6 +77,13 @@ public class SettingsLoader {
 
     public void saveSettings(Context context) throws IOException {
         Log.i("info", "SettingsLoader:saving settings");
+
+        // Update version code
+        if(settings.isValid()) {
+            settings.setVersionCode();
+        } else {
+            Log.i("warning", "saveSettings: invalid settings");
+        }
 
         // Make new file
         File file = new File(context.getFilesDir(), filename);

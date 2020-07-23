@@ -43,9 +43,23 @@
         </activity>
 
         <activity
+            android:name="djpiper28.mtgnewsapp.cardpreview.CardPreviewHostActivity"
+            android:clearTaskOnLaunch="true"
+            android:label="MTG News App - Set Preview"
+            android:resizeableActivity="true"
+            android:screenOrientation="fullUser">
+            <layout
+                android:defaultWidth="600dp"
+                android:defaultHeight="500dp"
+                android:gravity="top|end"
+                android:minWidth="300dp"
+                android:minHeight="450dp" />
+        </activity>
+
+        <activity
             android:name=".CardPreviewActivity"
             android:clearTaskOnLaunch="true"
-            android:label="MTG News App - Card Previews"
+            android:label="MTG News App - Set Preview"
             android:resizeableActivity="true"
             android:screenOrientation="fullUser">
             <layout
@@ -90,6 +104,11 @@
             </intent-filter>
 
         </activity>
+
+        <service
+            android:name=".NewsUpdateService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="false"/>
 
     </application>
 

@@ -6,7 +6,6 @@
     <string name="article_image">Article image</string>
     <string name="loading_news">Loading news, this may take some time</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="theme_settings">Theme Settings</string>
     <string name="news_settings">News Settings</string>
     <string name="change_colour">Change</string>
@@ -25,4 +24,18 @@
     <string name="mtg_goldfish">MTG Goldfish</string>
     <string name="view_library">View Library</string>
     <string name="invalidate_cache">Invalidate Cache</string>
+    <string name="update_period">Update Period (Hours)</string>
+    <string name="force_night">Force Dark Mode</string>
+    <string name="hours_to_update">Hours to update</string>
+    <string name="enable_news_background_refresh">Enable Background Refresh</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_hint">Card Name or Oracle Text</string>
+    <string name="sort_by">Sort By</string>
+    <string name="colour">Colour</string>
+    <string name="super_type">Super Type</string>
+    <string name="card_image">Card Image</string>
+    <string name="card_name_place_holder">Card Name Place Holder</string>
+    <string name="oracle_text_place_holder">Oracle Text Place Holder</string>
+    <string name="ascending_order">Ascending Order</string>
+    <string name="view_card">View Card</string>
 </resources>

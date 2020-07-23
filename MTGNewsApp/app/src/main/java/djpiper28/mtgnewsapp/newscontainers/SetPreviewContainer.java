@@ -54,7 +54,7 @@ public class SetPreviewContainer extends Fragment {
         int newSetCount = 0;
 
         for (forohfor.scryfall.api.Set set : sets) {
-            if (set.getParentSetCode() == null || set.getParentSetCode() == "") {
+            if (set.getParentSetCode() == null || set.getParentSetCode().equals("") || set.getSetType(). equalsIgnoreCase("starter")) {
                 if (set.getReleasedAt().after(now)) {
                     unreleasedSets.add(set);
                 } else if (set.getReleasedAt().after(twoWeeksAgo) && newSetCount < 5) {

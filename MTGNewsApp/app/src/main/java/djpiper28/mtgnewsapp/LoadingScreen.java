@@ -1,9 +1,11 @@
 package djpiper28.mtgnewsapp;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,16 +31,54 @@ import djpiper28.settings.Settings;
 import djpiper28.settings.SettingsActivity;
 import djpiper28.settings.SettingsLoader;
 
+import static androidx.core.app.JobIntentService.enqueueWork;
+
 public class LoadingScreen extends AppCompatActivity {
 
-    public static final String[] SocialShares = {"twitter.com", "facebook.com", "instagram.com", "youtube.com", "twitch.tv"};
+    public static final String[] SocialShares = {"twitter.com", "facebook.com", "instagram.com", "youtube.com", "twitch.tv", "discord.gg", "reddit.com"};
     public static final String[] Downloadable = {".docx", ".pdf", ".txt"};
     public static List<Runnable> onRefresh;
     public static List<NewsItem> dailyMTGNews, EDHRECNews, MTGGoldfishNews;
     public static List<forohfor.scryfall.api.Set> sets;
     public static boolean reloadRequested = false;  // To try to fetch data less
+    private static boolean started;
 
-    public static void loadNews(ProgressBar bar) {
+    private void startNewsRefreshService() throws Exception {
+        if (started) {
+            throw new Exception("Service already started");
+        }
+        started = true;
+        Log.i("info", "startNewsRefreshService: started service queuer");
+        Settings settings = SettingsLoader.getSettingsLoader().getSettings();
+        (new Thread(() -> {
+            try {
+                while (true) {
+                    // Wait until next refresh
+                    while (!settings.cacheUpdateRequired() && settings.getUpdateEvery() != 0 && settings.isBackgroundRefreshEnabled()) {
+                        // Starts the JobIntentService
+                        try {
+                            Thread.sleep(360000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    // Refresh
+                    enqueueWork(this, NewsUpdateService.class, 1, new Intent());
+                    Log.i("info", "startNewsRefreshService: queued news refresh");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("ERROR", "startNewsRefreshService: error - service queuer crashed");
+            }
+        }, "refresh service starter thread")).start();
+    }
+
+    public static void loadNews(@NonNull ProgressBar bar) {
+        loadNews(bar, bar.getContext());
+    }
+
+    public static void loadNews(ProgressBar bar, Context context) {
         Settings settings = SettingsLoader.getSettingsLoader().getSettings();
 
         if (reloadRequested || settings.cacheUpdateRequired()) {
@@ -74,9 +114,9 @@ public class LoadingScreen extends AppCompatActivity {
                     a++;
                 }
 
-                if(dailyMTGNews == null || !gotNews) {
+                if (dailyMTGNews == null || !gotNews) {
                     dailyMTGNews = settings.getDailyMTGNews();
-                } else{
+                } else {
                     settings.setDailyMTGNews(dailyMTGNews);
                 }
             }
@@ -109,9 +149,9 @@ public class LoadingScreen extends AppCompatActivity {
                     a++;
                 }
 
-                if(MTGGoldfishNews == null || !gotNews) {
+                if (MTGGoldfishNews == null || !gotNews) {
                     MTGGoldfishNews = settings.getMTGGoldfishNews();
-                } else{
+                } else {
                     settings.setMTGGoldfishNews(MTGGoldfishNews);
                 }
             }
@@ -144,9 +184,9 @@ public class LoadingScreen extends AppCompatActivity {
                     a++;
                 }
 
-                if(EDHRECNews == null || !gotNews) {
+                if (EDHRECNews == null || !gotNews) {
                     EDHRECNews = settings.getEDHRECNews();
-                } else{
+                } else {
                     settings.setEDHRECNews(EDHRECNews);
                 }
             }
@@ -175,7 +215,7 @@ public class LoadingScreen extends AppCompatActivity {
 
                 if (sets == null || !gotSets) {
                     sets = settings.getSets();
-                } else{
+                } else {
                     settings.setSets(sets);
                 }
             }
@@ -187,8 +227,7 @@ public class LoadingScreen extends AppCompatActivity {
         }
 
         try {
-            SettingsLoader.getSettingsLoader().saveSettings(bar.getContext());
-            Log.i("info", "loadNews: "+settings.toStringNice());
+            SettingsLoader.getSettingsLoader().saveSettings(context);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -196,7 +235,7 @@ public class LoadingScreen extends AppCompatActivity {
         for (Runnable runnable : onRefresh) {
             try {
                 runnable.run();
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             //(new Thread(runnable)).start();
@@ -215,21 +254,32 @@ public class LoadingScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
 
+        started = false;
+
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
         reloadRequested = false;
         onRefresh = new LinkedList<>();
+        SettingsLoader settingsLoader = SettingsLoader.getSettingsLoader();
 
         try {
-            SettingsLoader settingsLoader = new SettingsLoader(this); // Loads settings
-
-            Log.i("info", "onCreate: "+settingsLoader.getSettings().toStringNice());
+            if (settingsLoader == null) {
+                settingsLoader = new SettingsLoader(this); // Loads settings
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        int colour = settingsLoader.getSettings().getPrimaryColour();
+        getWindow().setStatusBarColor(Color.rgb((int) (Color.red(colour) * 0.8),
+                (int) (Color.green(colour) * 0.8),
+                (int) (Color.blue(colour) * 0.8)));
+
         ProgressBar bar = findViewById(R.id.progressBar);
+
+        // Settings must be loaded first
+        myToolbar.setBackgroundColor(SettingsLoader.getSettingsLoader().getSettings().getPrimaryColour());
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -245,6 +295,12 @@ public class LoadingScreen extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.tabHostContainer, tabHost).commit();
 
                 Log.i("Loading Screen", "Started tabhost");
+
+                try {
+                    startNewsRefreshService();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             })).start();
         }
     }

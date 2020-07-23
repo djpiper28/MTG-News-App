@@ -1,57 +1,88 @@
 package djpiper28.settings;
 
-import androidx.core.view.accessibility.AccessibilityViewCommand;
+import android.content.Context;
+
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 
 import com.google.gson.Gson;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import djpiper28.mtgnewsapp.BuildConfig;
+import djpiper28.mtgnewsapp.R;
 import djpiper28.news.NewsItem;
 import forohfor.scryfall.api.Set;
 
 public class Settings {
 
-    private static long updateEvery = 6L * 60L * 60L * 1000L;
-    //TODO: add theme change support
-    //private Color primaryColour, primaryColourDark, accentColour;
+    private transient static final long hour = 60 * 60 * 1000;
+    private int versionCode;
+    private long updateEvery = 6L * 60L * 60L * 1000L;
+    private int primaryColour;
+    private int accentColour;
     private boolean useCardsForNews;
     private boolean dailyMTGEnabled;
     private boolean setPreviewsEnabled;
     private boolean EDHRECEnabled;
     private boolean MTGGoldfishEnabled;
+    private boolean isDarkModeEnabled;
+    private boolean isBackgroundRefreshEnabled;
     private List<NewsItem> dailyMTGNews, EDHRECNews, MTGGoldfishNews;
     private List<Set> sets;
     private long lastCacheUpdate;
 
-    @Override
-    public String toString() {
-        return "Settings{" +
-                "useCardsForNews=" + useCardsForNews +
-                ", dailyMTGEnabled=" + dailyMTGEnabled +
-                ", setPreviewsEnabled=" + setPreviewsEnabled +
-                ", EDHRECEnabled=" + EDHRECEnabled +
-                ", MTGGoldfishEnabled=" + MTGGoldfishEnabled +
-                ", dailyMTGNews=" + dailyMTGNews +
-                ", EDHRECNews=" + EDHRECNews +
-                ", MTGGoldfishNews=" + MTGGoldfishNews +
-                ", sets=" + sets +
-                ", lastCacheUpdate=" + lastCacheUpdate +
-                '}';
+    public int getPrimaryColour() {
+        return primaryColour;
     }
 
-    public String toStringNice() {
-        return "Settings{" +
-                "useCardsForNews=" + useCardsForNews +
-                ", dailyMTGEnabled=" + dailyMTGEnabled +
-                ", setPreviewsEnabled=" + setPreviewsEnabled +
-                ", EDHRECEnabled=" + EDHRECEnabled +
-                ", MTGGoldfishEnabled=" + MTGGoldfishEnabled +
-                ", dailyMTGNews=" + (dailyMTGNews == null) +
-                ", EDHRECNews=" + (EDHRECNews == null) +
-                ", MTGGoldfishNews=" + (MTGGoldfishNews == null) +
-                ", sets=" + (sets == null) +
-                ", lastCacheUpdate=" + lastCacheUpdate +
-                '}';
+    public void setPrimaryColour(int primaryColour) {
+        this.primaryColour = primaryColour;
+    }
+
+    public int getAccentColour() {
+        return accentColour;
+    }
+
+    public void setAccentColour(int accentColour) {
+        this.accentColour = accentColour;
+    }
+
+    public void setVersionCode() {
+        versionCode = BuildConfig.VERSION_CODE;
+    }
+
+    public int getVersion() {
+        return versionCode;
+    }
+
+    public boolean outdatedSettings() {
+        return BuildConfig.VERSION_CODE > versionCode;
+    }
+
+    public long getUpdateEvery() {
+        return updateEvery / hour;
+    }
+
+    public void setUpdateEvery(long updateEvery) {
+        this.updateEvery = updateEvery * hour;
+    }
+
+    public boolean isEDHRECEnabled() {
+        return EDHRECEnabled;
+    }
+
+    public void setEDHRECEnabled(boolean EDHRECEnabled) {
+        this.EDHRECEnabled = EDHRECEnabled;
+    }
+
+    public boolean isDarkModeEnabled() {
+        return isDarkModeEnabled;
+    }
+
+    public void setDarkModeEnabled(boolean darkModeEnabled) {
+        isDarkModeEnabled = darkModeEnabled;
     }
 
     public long getLastCacheUpdate() {
@@ -63,7 +94,7 @@ public class Settings {
     }
 
     public List<NewsItem> getDailyMTGNews() {
-        if(dailyMTGNews == null) {
+        if (dailyMTGNews == null) {
             return new LinkedList<>();
         }
         return dailyMTGNews;
@@ -75,7 +106,7 @@ public class Settings {
     }
 
     public List<NewsItem> getEDHRECNews() {
-        if(EDHRECNews == null) {
+        if (EDHRECNews == null) {
             return new LinkedList<>();
         }
         return EDHRECNews;
@@ -87,7 +118,7 @@ public class Settings {
     }
 
     public List<NewsItem> getMTGGoldfishNews() {
-        if(MTGGoldfishNews == null) {
+        if (MTGGoldfishNews == null) {
             return new LinkedList<>();
         }
         return MTGGoldfishNews;
@@ -99,7 +130,7 @@ public class Settings {
     }
 
     public List<Set> getSets() {
-        if(sets == null) {
+        if (sets == null) {
             return new LinkedList<>();
         }
         return sets;
@@ -117,30 +148,6 @@ public class Settings {
     public void setEdhrecEnabled(boolean edhrecEnabled) {
         this.EDHRECEnabled = edhrecEnabled;
     }
-
-    /*public Color getPrimaryColour() {
-        return primaryColour;
-    }
-
-    public void setPrimaryColour(Color primaryColour) {
-        this.primaryColour = primaryColour;
-    }
-
-    public Color getPrimaryColourDark() {
-        return primaryColourDark;
-    }
-
-    public void setPrimaryColourDark(Color primaryColourDark) {
-        this.primaryColourDark = primaryColourDark;
-    }
-
-    public Color getAccentColour() {
-        return accentColour;
-    }
-
-    public void setAccentColour(Color accentColour) {
-        this.accentColour = accentColour;
-    }*/
 
     public boolean isMTGGoldfishEnabled() {
         return MTGGoldfishEnabled;
@@ -174,21 +181,21 @@ public class Settings {
         this.setPreviewsEnabled = setPreviewsEnabled;
     }
 
-    public void applyDefaultSettings() {
-        /*primaryColour = R.color.colorPrimary;
-        primaryColourDark = R.color.colorPrimaryDark;
-        accentColour = R.color.colorAccent;*/
+    public void applyDefaultSettings(Context context) {
+        setPrimaryColour(ContextCompat.getColor(context, R.color.colorPrimary));
+        setAccentColour(ContextCompat.getColor(context, R.color.colorAccent));
+        setUpdateEvery(6);
         setUseCardsForNews(false);
         setDailyMTGEnabled(true);
         setEdhrecEnabled(true);
         setMTGGoldfishEnabled(true);
         setSetPreviewsEnabled(true);
-
-        dailyMTGNews = null;
-        EDHRECNews = null;
-        sets = null;
-        MTGGoldfishNews = null;
-
+        setVersionCode();
+        setDailyMTGNews(null);
+        setEDHRECNews(null);
+        setSets(null);
+        setMTGGoldfishNews(null);
+        setBackgroundRefreshEnabled(true);
         setLastCacheUpdate(System.currentTimeMillis());
     }
 
@@ -196,6 +203,7 @@ public class Settings {
         Gson gson = new Gson();
         return gson.toJson(this);
     }
+
 
     public boolean cacheUpdateRequired() {
         if (System.currentTimeMillis() - getLastCacheUpdate() >= updateEvery) {
@@ -209,7 +217,22 @@ public class Settings {
     }
 
     public boolean isValid() {
-        return updateEvery > 0 && dailyMTGNews!=null && EDHRECNews!=null && MTGGoldfishNews!=null && sets!=null;
+        return versionCode > 0 && updateEvery > 0 && dailyMTGNews != null && EDHRECNews != null && MTGGoldfishNews != null && sets != null;
     }
 
+    public void applyDarkMode() {
+        if (isDarkModeEnabled) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        }
+    }
+
+    public boolean isBackgroundRefreshEnabled() {
+        return isBackgroundRefreshEnabled;
+    }
+
+    public void setBackgroundRefreshEnabled(boolean backgroundRefreshEnabled) {
+        isBackgroundRefreshEnabled = backgroundRefreshEnabled;
+    }
 }

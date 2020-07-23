@@ -10,8 +10,8 @@ android {
         minSdkVersion 21
         // 21 for lambda
         targetSdkVersion 29
-        versionCode 111
-        versionName "1.1.1"
+        versionCode 120
+        versionName "1.2.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -21,6 +21,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             multiDexEnabled = true
+
+            // Enables code shrinking, obfuscation, and optimization for only
+            // your project's release build type.
+            minifyEnabled false
+
+            // Enables resource shrinking, which is performed by the
+            // Android Gradle plugin.
+            shrinkResources false
         }
     }
 
@@ -52,14 +60,15 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
     implementation 'androidx.navigation:navigation-ui:2.2.2'
     implementation 'androidx.cardview:cardview:1.0.0'
+
     implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'com.github.2coffees1team:GlideToVectorYou:v2.0.0'
     implementation 'com.pes.materialcolorpicker:library:1.2.5'
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation 'io.github.forohforerror:ScryfallAPIBinding:1.10.2'
-    implementation 'com.google.code.gson:gson:2.8.6'
-    //implementation 'https://github.com/Pes8/android-material-color-picker-dialog'
+    implementation 'com.pes.materialcolorpicker:library:1.2.5'
 
 }

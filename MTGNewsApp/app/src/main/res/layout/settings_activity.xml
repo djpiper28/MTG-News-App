@@ -102,6 +102,68 @@
 
             </androidx.cardview.widget.CardView>
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                android:padding="10sp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8sp">
+
+                    <Switch
+                        android:id="@+id/EnableNewsRefresh"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5sp"
+                        android:checked="true"
+                        android:padding="5sp"
+                        android:text="@string/enable_news_background_refresh"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5sp"
+                android:padding="10sp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8sp">
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/update_period"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/cacheUpdateFrequency"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="6"
+                        android:contentDescription="@string/hours_to_update"
+                        android:ems="10"
+                        android:inputType="number"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView4"
+                        tools:ignore="LabelFor" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="24sp" />
@@ -114,7 +176,7 @@
                 android:layout_margin="5sp"
                 android:text="@string/theme_settings" />
 
-            <!--<androidx.cardview.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5sp"
@@ -186,7 +248,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.cardview.widget.CardView>-->
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -236,6 +298,33 @@
 
             </androidx.cardview.widget.CardView>
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5sp"
+                android:padding="10sp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8sp">
+
+                    <Switch
+                        android:id="@+id/switchForceNightMode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5sp"
+                        android:checked="true"
+                        android:padding="5sp"
+                        android:text="@string/force_night"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"  />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="24sp" />
@@ -243,49 +332,46 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5sp">
+                android:padding="8sp">
 
                 <Button
                     android:id="@+id/saveSettings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5sp"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="8sp"
                     android:layout_marginTop="8sp"
-                    android:layout_marginEnd="8sp"
-                    android:layout_marginBottom="8sp"
                     android:background="@color/colorAccent"
+                    android:padding="15sp"
                     android:text="@string/save_settings"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintEnd_toEndOf="@+id/cacheReset"
+                    app:layout_constraintStart_toStartOf="@+id/cacheReset"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/restoreDefaults"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5sp"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="24sp"
                     android:layout_marginTop="8sp"
-                    android:layout_marginEnd="8sp"
-                    android:layout_marginBottom="8sp"
                     android:background="@color/colorAccent"
+                    android:padding="15sp"
                     android:text="@string/restore_default"
-                    app:layout_constraintStart_toEndOf="@id/saveSettings"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintEnd_toEndOf="@+id/cacheReset"
+                    app:layout_constraintStart_toStartOf="@+id/cacheReset"
+                    app:layout_constraintTop_toBottomOf="@id/saveSettings" />
 
                 <Button
-                    android:layout_marginTop="24sp"
                     android:id="@+id/cacheReset"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/invalidate_cache"
-                    android:padding="5sp"
-                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="8sp"
                     android:background="@color/colorAccent"
-                    app:layout_constraintStart_toStartOf="@+id/saveSettings"
-                    app:layout_constraintTop_toBottomOf="@+id/saveSettings" />
+                    android:padding="15sp"
+                    android:text="@string/invalidate_cache"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/restoreDefaults" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

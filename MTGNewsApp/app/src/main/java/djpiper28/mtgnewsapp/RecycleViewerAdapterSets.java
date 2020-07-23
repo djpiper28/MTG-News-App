@@ -2,11 +2,13 @@ package djpiper28.mtgnewsapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,10 @@ import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYouListener;
 import java.text.DateFormat;
 import java.util.List;
 
+import djpiper28.mtgnewsapp.cardpreview.CardPreviewHostActivity;
+import djpiper28.mtgnewsapp.cardpreview.CardSearchAndSorter;
+import djpiper28.settings.SettingsLoader;
+import forohfor.scryfall.api.MTGCardQuery;
 import forohfor.scryfall.api.Set;
 
 public class RecycleViewerAdapterSets extends RecyclerView.Adapter<RecycleViewerAdapterSets.ViewHolder> {
@@ -56,7 +62,16 @@ public class RecycleViewerAdapterSets extends RecyclerView.Adapter<RecycleViewer
                         @Override
                         public void onResourceReady() {
                             Paint paint = new Paint();
-                            ColorFilter colorFilter = new PorterDuffColorFilter(ResourcesCompat.getColor(parent.itemView.getResources(), R.color.colorPrimary, null), PorterDuff.Mode.SRC_ATOP);
+                            ColorFilter colorFilter;
+
+                            // Try catch just in case the colour has been set to some strange value - who knows!
+                            try {
+                                colorFilter = new PorterDuffColorFilter(SettingsLoader.getSettingsLoader().getSettings().getPrimaryColour(), PorterDuff.Mode.SRC_ATOP);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                colorFilter = new PorterDuffColorFilter(ResourcesCompat.getColor(parent.itemView.getResources(), R.color.colorPrimary, null), PorterDuff.Mode.SRC_ATOP);
+                            }
+
                             paint.setColorFilter(colorFilter);
                             setImage.setLayerPaint(paint);
                         }
@@ -80,9 +95,22 @@ public class RecycleViewerAdapterSets extends RecyclerView.Adapter<RecycleViewer
 
         CardView viewPreviews = view.findViewById(R.id.CardView);
         viewPreviews.setOnClickListener(event -> {
-            CardPreviewActivity.url = set.getScryfallURI();
-            Intent intent = new Intent(parent.itemView.getContext(), CardPreviewActivity.class);
-            parent.itemView.getContext().startActivity(intent);
+            CardSearchAndSorter.resetCache();
+
+            (new Thread(() -> {
+                try {
+                    CardPreviewHostActivity.set = set;
+                    CardPreviewHostActivity.cards = MTGCardQuery.search("set:" + set.getCode());
+
+                    Log.i("Intent Change", "Changing to set preview view, " + CardPreviewHostActivity.cards.size() + " cards set:" + set.getCode());
+
+                    Intent intent = new Intent(parent.itemView.getContext(), CardPreviewHostActivity.class);
+                    parent.itemView.getContext().startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(parent.itemView.getContext(), "Error viewing set.", Toast.LENGTH_LONG).show();
+                }
+            })).start();
         });
     }
 

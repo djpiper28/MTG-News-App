@@ -1,7 +1,9 @@
 package djpiper28.mtgnewsapp;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +19,8 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Stack;
+
+import djpiper28.settings.SettingsLoader;
 
 import static djpiper28.mtgnewsapp.LoadingScreen.Downloadable;
 import static djpiper28.mtgnewsapp.LoadingScreen.SocialShares;
@@ -47,14 +51,21 @@ public class ArticleViewActivity extends AppCompatActivity {
         String url = urlForArticle;
         webView = findViewById(R.id.webView);
 
-        String newUA = "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
-        webView.getSettings().setUserAgentString(newUA);
+        int colour = SettingsLoader.getSettingsLoader().getSettings().getPrimaryColour();
+        getWindow().setStatusBarColor(Color.rgb((int) (Color.red(colour) * 0.8),
+                (int) (Color.green(colour) * 0.8),
+                (int) (Color.blue(colour) * 0.8)));
+
+        //String newUA = "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
+        //webView.getSettings().setUserAgentString(newUA);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setUseWideViewPort(true);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             webView.getSettings().setOffscreenPreRaster(true);
         }
+
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setAllowContentAccess(true);
         webView.setWebViewClient(new WebViewClient() {
@@ -99,9 +110,11 @@ public class ArticleViewActivity extends AppCompatActivity {
         fab.setOnClickListener(event -> {
             openLink(webView.getUrl());
         });
+        fab.setBackgroundTintList(ColorStateList.valueOf(SettingsLoader.getSettingsLoader().getSettings().getAccentColour()));
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        myToolbar.setBackgroundColor(SettingsLoader.getSettingsLoader().getSettings().getPrimaryColour());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -150,7 +163,6 @@ public class ArticleViewActivity extends AppCompatActivity {
 
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
 

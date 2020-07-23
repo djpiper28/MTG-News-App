@@ -19,9 +19,9 @@
 
         <ImageView
             android:id="@+id/SetIcon"
-            android:layout_width="75sp"
-            android:layout_height="75sp"
-            android:layout_marginStart="10dp"
+            android:layout_width="70sp"
+            android:layout_height="70sp"
+            android:layout_marginStart="10sp"
             android:layout_marginTop="20sp"
             android:layout_marginBottom="20sp"
             android:contentDescription="Set preview icon"

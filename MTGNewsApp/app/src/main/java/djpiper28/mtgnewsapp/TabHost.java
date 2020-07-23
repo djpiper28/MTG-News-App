@@ -1,5 +1,6 @@
 package djpiper28.mtgnewsapp;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +33,7 @@ public class TabHost extends Fragment {
 
         // Reloads data.
         try {
-            LoadingScreen.loadNews(null);
+            LoadingScreen.loadNews(null, getContext());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -52,8 +53,9 @@ public class TabHost extends Fragment {
             container.removeAllViews();
         }
 
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
+        tabLayout.setBackgroundColor(SettingsLoader.getSettingsLoader().getSettings().getPrimaryColour());
 
         TabAdapter adapter = new TabAdapter(getChildFragmentManager());
 
@@ -91,6 +93,7 @@ public class TabHost extends Fragment {
             });    //Stops spamming of the FAB.
             refreshNews();
         });
+        refresh.setBackgroundTintList(ColorStateList.valueOf(SettingsLoader.getSettingsLoader().getSettings().getAccentColour()));
 
         LoadingScreen.onRefresh.add(() -> {
             refresh.setOnClickListener(event -> {

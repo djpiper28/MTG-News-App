@@ -1,5 +1,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,11 +11,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
-        android:layout_marginStart="12sp"
-        android:layout_marginEnd="12sp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="12sp"
         android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginEnd="12sp"
         android:padding="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,16 +25,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5sp"
-            android:padding="5sp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="5sp">
 
             <TextView
-                android:layout_margin="5sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="5sp"
                 android:padding="5sp"
-                android:textSize="20sp"
-                android:text="@string/news_settings" />
+                android:text="@string/news_settings"
+                android:textSize="20sp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -53,46 +54,46 @@
                         android:padding="5sp"
                         android:text="@string/news_sources"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <Switch
-                        android:layout_marginTop="5sp"
                         android:id="@+id/switchDailyMTG"
-                        android:padding="5sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/daily_mtg"
+                        android:layout_marginTop="5sp"
                         android:checked="true"
+                        android:padding="5sp"
+                        android:text="@string/daily_mtg"
                         app:layout_constraintStart_toStartOf="@id/news_sources"
                         app:layout_constraintTop_toBottomOf="@id/news_sources" />
 
                     <Switch
-                        android:layout_marginTop="5sp"
                         android:id="@+id/switchEDHRec"
-                        android:padding="5sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/EDHREC"
+                        android:layout_marginTop="5sp"
                         android:checked="false"
+                        android:padding="5sp"
+                        android:text="@string/EDHREC"
                         app:layout_constraintStart_toStartOf="@id/switchDailyMTG"
                         app:layout_constraintTop_toBottomOf="@id/switchDailyMTG" />
 
                     <Switch
-                        android:layout_marginTop="5sp"
                         android:id="@+id/switchMTGGoldfish"
-                        android:padding="5sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/mtg_goldfish"
+                        android:layout_marginTop="5sp"
                         android:checked="true"
+                        android:padding="5sp"
+                        android:text="@string/mtg_goldfish"
                         app:layout_constraintStart_toStartOf="@id/switchEDHRec"
                         app:layout_constraintTop_toBottomOf="@id/switchEDHRec" />
 
                     <Switch
-                        android:layout_marginTop="5sp"
                         android:id="@+id/switchSetPreviews"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5sp"
                         android:checked="true"
                         android:padding="5sp"
                         android:text="@string/set_previews"
@@ -103,19 +104,81 @@
 
             </androidx.cardview.widget.CardView>
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                android:padding="10sp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8sp">
+
+                    <Switch
+                        android:id="@+id/EnableNewsRefresh"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5sp"
+                        android:checked="true"
+                        android:padding="5sp"
+                        android:text="@string/enable_news_background_refresh"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5sp"
+                android:padding="10sp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8sp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/update_period"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/cacheUpdateFrequency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="6"
+                        android:contentDescription="@string/hours_to_update"
+                        android:ems="10"
+                        android:inputType="number"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="LabelFor" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="32sp" />
 
             <TextView
-                android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5sp"
                 android:layout_margin="5sp"
-                android:text="@string/theme_settings" />
+                android:padding="5sp"
+                android:text="@string/theme_settings"
+                android:textSize="20sp" />
 
-            <!--<androidx.cardview.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5sp"
@@ -141,9 +204,9 @@
                         android:layout_marginTop="8sp"
                         android:layout_marginEnd="8sp"
                         android:layout_marginBottom="8sp"
-                        android:textColor="#FFFFFF"
                         android:background="@color/colorPrimary"
                         android:text="@string/change_colour"
+                        android:textColor="#FFFFFF"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -178,16 +241,16 @@
                         android:layout_marginTop="8sp"
                         android:layout_marginEnd="8sp"
                         android:layout_marginBottom="8sp"
-                        android:textColor="#FFFFFF"
                         android:background="@color/colorAccent"
                         android:text="@string/change_colour"
+                        android:textColor="#FFFFFF"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.cardview.widget.CardView>-->
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -225,13 +288,40 @@
                             android:text="@string/big_image" />
 
                         <RadioButton
-                            android:layout_marginTop="5sp"
                             android:id="@+id/radioButtonSmallImage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="5sp"
                             android:text="@string/small_image" />
 
                     </RadioGroup>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5sp"
+                android:padding="10sp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8sp">
+
+                    <Switch
+                        android:id="@+id/switchForceNightMode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5sp"
+                        android:checked="true"
+                        android:padding="5sp"
+                        android:text="@string/force_night"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -250,15 +340,12 @@
                     android:id="@+id/saveSettings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8sp"
-                    android:layout_marginEnd="8sp"
-                    android:layout_marginBottom="8sp"
                     android:background="@color/colorAccent"
                     android:padding="5sp"
                     android:text="@string/save_settings"
                     android:textColor="#FFFFFF"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.25"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -268,26 +355,24 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24sp"
                     android:layout_marginTop="8sp"
-                    android:layout_marginBottom="8sp"
                     android:background="@color/colorAccent"
                     android:padding="5sp"
                     android:text="@string/restore_default"
                     android:textColor="#FFFFFF"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/saveSettings"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:layout_marginTop="24sp"
                     android:id="@+id/cacheReset"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/invalidate_cache"
-                    android:padding="5sp"
-                    android:textColor="#FFFFFF"
+                    android:layout_marginStart="24dp"
                     android:background="@color/colorAccent"
-                    app:layout_constraintStart_toStartOf="@+id/saveSettings"
-                    app:layout_constraintTop_toBottomOf="@+id/saveSettings" />
+                    android:padding="5sp"
+                    android:text="@string/invalidate_cache"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintStart_toEndOf="@+id/restoreDefaults"
+                    app:layout_constraintTop_toTopOf="@+id/saveSettings" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

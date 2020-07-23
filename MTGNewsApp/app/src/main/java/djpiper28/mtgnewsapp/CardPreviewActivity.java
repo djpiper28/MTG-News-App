@@ -1,7 +1,9 @@
 package djpiper28.mtgnewsapp;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +19,8 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Stack;
+
+import djpiper28.settings.SettingsLoader;
 
 import static djpiper28.mtgnewsapp.LoadingScreen.Downloadable;
 import static djpiper28.mtgnewsapp.LoadingScreen.SocialShares;
@@ -42,14 +46,21 @@ public class CardPreviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_preview);
 
+        int colour = SettingsLoader.getSettingsLoader().getSettings().getPrimaryColour();
+        getWindow().setStatusBarColor(Color.rgb((int) (Color.red(colour) * 0.8),
+                (int) (Color.green(colour) * 0.8),
+                (int) (Color.blue(colour) * 0.8)));
+
         urlStack = new Stack<>();
 
         webView = findViewById(R.id.webView);
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setUseWideViewPort(true);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             webView.getSettings().setOffscreenPreRaster(true);
         }
+
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -85,9 +96,11 @@ public class CardPreviewActivity extends AppCompatActivity {
         fab.setOnClickListener(event -> {
             openLink(webView.getUrl());
         });
+        fab.setBackgroundTintList(ColorStateList.valueOf(SettingsLoader.getSettingsLoader().getSettings().getAccentColour()));
 
         webView.loadUrl(url);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setBackgroundColor(SettingsLoader.getSettingsLoader().getSettings().getPrimaryColour());
         setSupportActionBar(myToolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -126,8 +139,8 @@ public class CardPreviewActivity extends AppCompatActivity {
             case R.id.action_share:
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out these new set previews!");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Check out these new set previews!" + webView.getUrl());
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out these new card preview");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Check out these new  preview " + webView.getUrl());
                 startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
                 return true;
 

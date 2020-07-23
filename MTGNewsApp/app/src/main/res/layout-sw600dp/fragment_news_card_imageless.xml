@@ -36,18 +36,16 @@
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="10sp"
             android:layout_marginTop="16sp"
-            android:layout_marginEnd="10sp"
             android:bufferType="spannable"
             android:maxLines="2"
             android:text="Title Here"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/backgroundImage"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView

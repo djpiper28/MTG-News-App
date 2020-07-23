@@ -17,12 +17,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tabGravity="fill"
-        app:tabMode="fixed"
+        app:tabMode="auto"
         app:tabSelectedTextColor="#FFFFFF"
         app:tabTextColor="#FFFFFF" />
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="?attr/actionBarSize"

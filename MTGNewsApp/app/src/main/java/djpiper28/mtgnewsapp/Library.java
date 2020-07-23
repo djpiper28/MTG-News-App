@@ -18,12 +18,12 @@ class Library {
         //TODO: check
         defaults.add(new Library("MTG News App (This app)", "https://github.com/djpiper28/MTG-News-App"));
         defaults.add(new Library("Gson", "https://github.com/google/gson"));
-        defaults.add(new Library("JSoup", "https://jsoup.org"));
         defaults.add(new Library("Glide", "https://github.com/bumptech/glide"));
         defaults.add(new Library("GlideToVectorYou", "https://github.com/corouteam/GlideToVectorYou"));
-        defaults.add(new Library("ScryfallAPIBinding", "https://github.com/ForOhForError/ScryfallAPIBinding"));
-        //defaults.add(new Library("Android Material Color Picker Dialog", "https://github.com/Pes8/android-material-color-picker-dialog"));
-        // ^^ not impplemented yet
+        defaults.add(new Library("Scryfall API Binding", "https://github.com/ForOhForError/ScryfallAPIBinding"));
+        defaults.add(new Library("Android Material Color Picker Dialog", "https://github.com/Pes8/android-material-color-picker-dialog"));
+        defaults.add(new Library("Manamoji", "https://github.com/scryfall/manamoji-slack"));
+        defaults.add(new Library("JSoup", "https://jsoup.org"));
 
         return defaults;
     }
