@@ -44,9 +44,6 @@ public class RecycleViewerManamoji extends RecyclerView.Adapter<RecycleViewerMan
     }
 
     private void expandForSets(ViewHolder parent, Drawable drawable) {
-        View view = parent.itemView;
-        ImageView setImage = view.findViewById(R.id.manamoji);
-        setImage.setImageDrawable(drawable);
     }
 
     // inflates the row layout from xml when needed
@@ -61,7 +58,8 @@ public class RecycleViewerManamoji extends RecyclerView.Adapter<RecycleViewerMan
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Drawable drawable = mData.get(position);
-        expandForSets(holder, drawable);
+        ImageView setImage = holder.itemView.findViewById(R.id.manamoji);
+        setImage.setImageDrawable(drawable);
     }
 
     // total number of rows

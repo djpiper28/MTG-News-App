@@ -38,4 +38,6 @@
     <string name="oracle_text_place_holder">Oracle Text Place Holder</string>
     <string name="ascending_order">Ascending Order</string>
     <string name="view_card">View Card</string>
+    <string name="scroll_to_top_of_page">Scroll to top of page</string>
+    <string name="manamoji">Manamoji</string>
 </resources>

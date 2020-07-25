@@ -1,18 +1,15 @@
 package djpiper28.mtgnewsapp.cardpreview;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Switch;
 
@@ -20,14 +17,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cursoradapter.widget.CursorAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import djpiper28.mtgnewsapp.R;
+import djpiper28.settings.Settings;
 import djpiper28.settings.SettingsLoader;
 import forohfor.scryfall.api.Card;
 import forohfor.scryfall.api.MTGCardQuery;
@@ -41,7 +40,7 @@ public class CardPreviewHostActivity extends AppCompatActivity {
 
     private final String[] sortTypes = {"CMC", "Name", "Power", "Toughness", "Collectors Number"};
     private final String[] colours = {"Any", "W", "U", "B", "R", "G"};
-    private final String[] superTypes = {"Any", "Land", "Creature", "Artifact", "Snow", "Enchantment", "Instant", "Sorcery", "Legendary", "Basic"};
+    private final String[] superTypes = {"Any", "Land", "Creature", "Artifact", "Snow", "Enchantment", "Instant", "Sorcery", "Legendary", "Basic", "Planeswalker"};
 
     private CardPreviewHostRecycleViewer adapter;
 
@@ -102,12 +101,12 @@ public class CardPreviewHostActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                applyFilters();
             }
         };
 
         SearchView searchView = findViewById(R.id.card_search_view);
-
+        searchView.setIconifiedByDefault(false);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -122,9 +121,21 @@ public class CardPreviewHostActivity extends AppCompatActivity {
             }
         });
 
+        Switch sortOrder = findViewById(R.id.ascending_order);
+        sortOrder.setOnCheckedChangeListener((a, b) -> {
+            applyFilters();
+        });
+
         superTypeSpinner.setOnItemSelectedListener(listener);
         colourTypeSpinner.setOnItemSelectedListener(listener);
         sortTypeSpinner.setOnItemSelectedListener(listener);
+
+        ScrollView scroll = findViewById(R.id.scroll_view);
+        FloatingActionButton fab = findViewById(R.id.scroll_to_top);
+        fab.setBackgroundColor(SettingsLoader.getSettingsLoader().getSettings().getAccentColour());
+        fab.setOnClickListener(click -> {
+            scroll.smoothScrollTo(0, 0);
+        });
     }
 
     private SortBy getSortType() {
@@ -151,7 +162,7 @@ public class CardPreviewHostActivity extends AppCompatActivity {
     }
 
     private void applyFilters() {
-         updateCardList(CardSearchAndSorter.search(cardsUnfiltered, ((SearchView) findViewById(R.id.card_search_view)).getQuery().toString(),
+         updateCardList(CardSearchAndSorter.search(clone(cardsUnfiltered), ((SearchView) findViewById(R.id.card_search_view)).getQuery().toString(),
                  ((Spinner) findViewById(R.id.super_type_spinner)).getSelectedItem().toString(),
                  ((Spinner) findViewById(R.id.colour_type)).getSelectedItem().toString(),
                  getSortType(), ((Switch) findViewById(R.id.ascending_order)).isChecked()));
@@ -160,9 +171,7 @@ public class CardPreviewHostActivity extends AppCompatActivity {
     private List<Card> clone(List<Card> cards) {
         List<Card> output = new LinkedList<>();
 
-        for (Card card: cards) {
-            output.add(card);
-        }
+        output.addAll(cards);
 
         return output;
     }
@@ -212,6 +221,7 @@ public class CardPreviewHostActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        applyFilters();
     }
 
     @Override

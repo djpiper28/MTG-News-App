@@ -65,7 +65,9 @@ public class CardViewPagerAdapter extends RecyclerView.Adapter<CardViewPagerAdap
             cardName.setText(card.getName());
 
             TextView oracleText = holder.itemView.findViewById(R.id.oracle_text);
-            oracleText.setText(card.getOracleText());
+            String pt = card.getPower() == null || card.getPower().equals("") ? "" : card.getPower() + "/" + card.getToughness();
+
+            oracleText.setText(String.format("%s\n\n%s\n\n%s\n\n%s %s (%s) - %s", card.getTypeLine(), card.getOracleText(), pt, card.getCollectorNumber(), card.getRarity().toUpperCase().toCharArray()[0], card.getSetCode().toUpperCase(), card.getArtist()));
 
             Button openButton = holder.itemView.findViewById(R.id.open_card_on_scryfall);
             openButton.setOnClickListener(click -> {
