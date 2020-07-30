@@ -2,6 +2,7 @@ package djpiper28.mtgnewsapp.cardpreview;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -66,6 +67,11 @@ public class CardPreviewHostActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         myToolbar.setBackgroundColor(SettingsLoader.getSettingsLoader().getSettings().getPrimaryColour());
+
+        int colour = SettingsLoader.getSettingsLoader().getSettings().getPrimaryColour();
+        getWindow().setStatusBarColor(Color.rgb((int) (Color.red(colour) * 0.8),
+                (int) (Color.green(colour) * 0.8),
+                (int) (Color.blue(colour) * 0.8)));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

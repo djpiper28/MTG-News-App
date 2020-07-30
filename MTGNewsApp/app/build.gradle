@@ -10,8 +10,8 @@ android {
         minSdkVersion 21
         // 21 for lambda
         targetSdkVersion 29
-        versionCode 1203
-        versionName "V1.2.1"
+        versionCode 1204
+        versionName "V1.2.2"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
