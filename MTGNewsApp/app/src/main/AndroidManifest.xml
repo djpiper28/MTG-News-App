@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ThirdPartyLibraries"
+            android:name=".thirdparty.ThirdPartyLibraries"
             android:clearTaskOnLaunch="true"
             android:label="@string/third_party_libraries"
             android:resizeableActivity="true"
@@ -29,7 +29,7 @@
         </activity>
 
         <activity
-            android:name="djpiper28.settings.SettingsActivity"
+            android:name=".settings.SettingsActivity"
             android:clearTaskOnLaunch="true"
             android:label="@string/title_activity_settings"
             android:resizeableActivity="true"
@@ -43,7 +43,7 @@
         </activity>
 
         <activity
-            android:name="djpiper28.mtgnewsapp.cardpreview.CardPreviewHostActivity"
+            android:name=".setpreview.cardpreview.CardPreviewHostActivity"
             android:clearTaskOnLaunch="true"
             android:label="MTG News App - Set Preview"
             android:resizeableActivity="true"
@@ -57,7 +57,7 @@
         </activity>
 
         <activity
-            android:name=".CardPreviewActivity"
+            android:name=".setpreview.cardpreview.CardPreviewActivity"
             android:clearTaskOnLaunch="true"
             android:label="MTG News App - Set Preview"
             android:resizeableActivity="true"
@@ -71,7 +71,7 @@
         </activity>
 
         <activity
-            android:name=".ArticleViewActivity"
+            android:name=".news.ArticleViewActivity"
             android:clearTaskOnLaunch="true"
             android:label="MTG News App - View Article"
             android:resizeableActivity="true"
@@ -106,7 +106,7 @@
         </activity>
 
         <service
-            android:name=".NewsUpdateService"
+            android:name=".news.NewsUpdateService"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:exported="false"/>
 

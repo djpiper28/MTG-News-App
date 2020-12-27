@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
  */
 public class ErrorFragment extends Fragment {
 
-    private String errorMessage;
+    private final String errorMessage;
 
     public ErrorFragment(String errorMessage) {
         this.errorMessage = errorMessage;

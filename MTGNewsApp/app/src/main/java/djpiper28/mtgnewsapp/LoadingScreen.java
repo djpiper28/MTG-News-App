@@ -23,13 +23,15 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import djpiper28.news.DailyMTGNewsGetter;
-import djpiper28.news.EDHRECNewsGetter;
-import djpiper28.news.MTGGoldfishNewsGetter;
-import djpiper28.news.NewsItem;
-import djpiper28.settings.Settings;
-import djpiper28.settings.SettingsActivity;
-import djpiper28.settings.SettingsLoader;
+import djpiper28.mtgnewsapp.news.DailyMTGNewsGetter;
+import djpiper28.mtgnewsapp.news.EDHRECNewsGetter;
+import djpiper28.mtgnewsapp.news.MTGGoldfishNewsGetter;
+import djpiper28.mtgnewsapp.news.NewsItem;
+import djpiper28.mtgnewsapp.news.NewsUpdateService;
+import djpiper28.mtgnewsapp.settings.Settings;
+import djpiper28.mtgnewsapp.settings.SettingsActivity;
+import djpiper28.mtgnewsapp.settings.SettingsLoader;
+import djpiper28.mtgnewsapp.thirdparty.ThirdPartyLibraries;
 
 import static androidx.core.app.JobIntentService.enqueueWork;
 
@@ -42,37 +44,6 @@ public class LoadingScreen extends AppCompatActivity {
     public static List<forohfor.scryfall.api.Set> sets;
     public static boolean reloadRequested = false;  // To try to fetch data less
     private static boolean started;
-
-    private void startNewsRefreshService() throws Exception {
-        if (started) {
-            throw new Exception("Service already started");
-        }
-        started = true;
-        Log.i("info", "startNewsRefreshService: started service queuer");
-        Settings settings = SettingsLoader.getSettingsLoader().getSettings();
-        (new Thread(() -> {
-            try {
-                while (true) {
-                    // Wait until next refresh
-                    while (!settings.cacheUpdateRequired() && settings.getUpdateEvery() != 0 && settings.isBackgroundRefreshEnabled()) {
-                        // Starts the JobIntentService
-                        try {
-                            Thread.sleep(360000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    // Refresh
-                    enqueueWork(this, NewsUpdateService.class, 1, new Intent());
-                    Log.i("info", "startNewsRefreshService: queued news refresh");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e("ERROR", "startNewsRefreshService: error - service queuer crashed");
-            }
-        }, "refresh service starter thread")).start();
-    }
 
     public static void loadNews(@NonNull ProgressBar bar) {
         loadNews(bar, bar.getContext());
@@ -240,6 +211,37 @@ public class LoadingScreen extends AppCompatActivity {
             }
             //(new Thread(runnable)).start();
         }
+    }
+
+    private void startNewsRefreshService() throws Exception {
+        if (started) {
+            throw new Exception("Service already started");
+        }
+        started = true;
+        Log.i("info", "startNewsRefreshService: started service queuer");
+        Settings settings = SettingsLoader.getSettingsLoader().getSettings();
+        (new Thread(() -> {
+            try {
+                while (true) {
+                    // Wait until next refresh
+                    while (!settings.cacheUpdateRequired() && settings.getUpdateEvery() != 0 && settings.isBackgroundRefreshEnabled()) {
+                        // Starts the JobIntentService
+                        try {
+                            Thread.sleep(360000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    // Refresh
+                    enqueueWork(this, NewsUpdateService.class, 1, new Intent());
+                    Log.i("info", "startNewsRefreshService: queued news refresh");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("ERROR", "startNewsRefreshService: error - service queuer crashed");
+            }
+        }, "refresh service starter thread")).start();
     }
 
     @Override

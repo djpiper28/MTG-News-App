@@ -12,16 +12,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import djpiper28.news.NewsItem;
-
 public class NewsGetter {
 
     private static final String siteRoot = "https://magic.wizards.com";
     private static final String site = "https://magic.wizards.com/en/rss/rss.xml?tags=Daily%20MTG&lang=en";
     private static final String user = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:73.0) Gecko/20100101 Firefox/73.0";
 
-    public List<djpiper28.news.NewsItem> getNews() throws IOException {
-        List<djpiper28.news.NewsItem> output = new LinkedList<djpiper28.news.NewsItem>();
+    public List<djpiper28.mtgnewsapp.news.NewsItem> getNews() throws IOException {
+        List<djpiper28.mtgnewsapp.news.NewsItem> output = new LinkedList<djpiper28.mtgnewsapp.news.NewsItem>();
         Logger logger = Logger.getLogger("News Getter");
 
         try {

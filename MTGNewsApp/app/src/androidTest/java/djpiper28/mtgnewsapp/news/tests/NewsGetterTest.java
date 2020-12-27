@@ -3,8 +3,8 @@ package djpiper28.mtgnewsapp.news.tests;
 import java.util.List;
 
 import djpiper28.mtgnewsapp.news.testInterface.Test;
-import djpiper28.news.DailyMTGNewsGetter;
-import djpiper28.news.NewsItem;
+import djpiper28.mtgnewsapp.news.DailyMTGNewsGetter;
+import djpiper28.mtgnewsapp.news.NewsItem;
 
 public class NewsGetterTest extends Test {
 

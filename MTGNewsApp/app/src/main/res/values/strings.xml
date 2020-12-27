@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">MTG News</string>
     <string name="share_using">Share Using</string>
-    <string name="unreleased_sets">Unreleased sets:</string>
-    <string name="new_sets">New sets:</string>
+    <string name="unreleased_sets">New sets:</string>
+    <string name="new_sets">Sets:</string>
     <string name="article_image">Article image</string>
     <string name="loading_news">Loading news, this may take some time</string>
     <string name="title_activity_settings">Settings</string>
@@ -40,4 +40,6 @@
     <string name="view_card">View Card</string>
     <string name="scroll_to_top_of_page">Scroll to top of page</string>
     <string name="manamoji">Manamoji</string>
+    <string name="s">New Sets:</string>
+    <string name="sets">Sets:</string>
 </resources>

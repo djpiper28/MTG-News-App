@@ -13,12 +13,12 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
-import djpiper28.mtgnewsapp.newscontainers.DailyMTGNewsContainerFragment;
-import djpiper28.mtgnewsapp.newscontainers.EDHRECNewsContainerFragment;
-import djpiper28.mtgnewsapp.newscontainers.MTGGoldfishNewsContainerFragment;
-import djpiper28.mtgnewsapp.newscontainers.SetPreviewContainer;
-import djpiper28.settings.Settings;
-import djpiper28.settings.SettingsLoader;
+import djpiper28.mtgnewsapp.news.newscontainers.DailyMTGNewsContainerFragment;
+import djpiper28.mtgnewsapp.news.newscontainers.EDHRECNewsContainerFragment;
+import djpiper28.mtgnewsapp.news.newscontainers.MTGGoldfishNewsContainerFragment;
+import djpiper28.mtgnewsapp.setpreview.SetPreviewContainer;
+import djpiper28.mtgnewsapp.settings.Settings;
+import djpiper28.mtgnewsapp.settings.SettingsLoader;
 
 public class TabHost extends Fragment {
 
@@ -26,7 +26,7 @@ public class TabHost extends Fragment {
 
     }
 
-    private void refreshNews() {
+    private void refreshNews(FloatingActionButton fab) {
         /*Intent intent = new Intent(getContext(), LoadingScreen.class);
         LoadingScreen.reloadRequested = true;
         startActivity(intent);*/
@@ -36,6 +36,8 @@ public class TabHost extends Fragment {
             LoadingScreen.loadNews(null, getContext());
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            fab.setEnabled(true);
         }
     }
 
@@ -61,24 +63,23 @@ public class TabHost extends Fragment {
 
         Settings settings = SettingsLoader.getSettingsLoader().getSettings();
 
-        if(settings.isDailyMTGEnabled()) {
+        if (settings.isDailyMTGEnabled()) {
             Log.i("TabHost", "Loading dailymtg news viewer");
             adapter.addFragment(new DailyMTGNewsContainerFragment(), "Daily MTG");
 
         }
 
-        if(settings.isEdhrecEnabled()) {
+        if (settings.isEdhrecEnabled()) {
             Log.i("TabHost", "Loading edhrec news viewer");
             adapter.addFragment(new EDHRECNewsContainerFragment(), "EDHREC");
         }
 
-        if(settings.isMTGGoldfishEnabled()) {
+        if (settings.isMTGGoldfishEnabled()) {
             Log.i("TabHost", "Loading mtg goldfish news viewer");
             adapter.addFragment(new MTGGoldfishNewsContainerFragment(), "MTGGOLDFISH");
-
         }
 
-        if(settings.isSetPreviewsEnabled()) {
+        if (settings.isSetPreviewsEnabled()) {
             Log.i("TabHost", "Loading set viewer");
             adapter.addFragment(new SetPreviewContainer(), "Set Previews");
         }
@@ -89,17 +90,15 @@ public class TabHost extends Fragment {
 
         FloatingActionButton refresh = view.findViewById(R.id.fab);
         refresh.setOnClickListener(event -> {
-            refresh.setOnClickListener(click -> {
-            });    //Stops spamming of the FAB.
-            refreshNews();
+            refresh.setEnabled(false);
+            refreshNews(refresh);
         });
         refresh.setBackgroundTintList(ColorStateList.valueOf(SettingsLoader.getSettingsLoader().getSettings().getAccentColour()));
 
         LoadingScreen.onRefresh.add(() -> {
             refresh.setOnClickListener(event -> {
-                refresh.setOnClickListener(click -> {
-                });    //Stops spamming of the FAB.
-                refreshNews();
+                refresh.setEnabled(false);
+                refreshNews(refresh);
             });
         });
 
