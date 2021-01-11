@@ -15,6 +15,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import djpiper28.mtgnewsapp.news.newscontainers.DailyMTGNewsContainerFragment;
 import djpiper28.mtgnewsapp.news.newscontainers.EDHRECNewsContainerFragment;
+import djpiper28.mtgnewsapp.news.newscontainers.HipstersNewsContainerFragment;
 import djpiper28.mtgnewsapp.news.newscontainers.MTGGoldfishNewsContainerFragment;
 import djpiper28.mtgnewsapp.setpreview.SetPreviewContainer;
 import djpiper28.mtgnewsapp.settings.Settings;
@@ -77,6 +78,11 @@ public class TabHost extends Fragment {
         if (settings.isMTGGoldfishEnabled()) {
             Log.i("TabHost", "Loading mtg goldfish news viewer");
             adapter.addFragment(new MTGGoldfishNewsContainerFragment(), "MTGGOLDFISH");
+        }
+
+        if (settings.isHipstersEnabled()) {
+            Log.i("TabHost", "Loading hipsters news viewer");
+            adapter.addFragment(new HipstersNewsContainerFragment(), "Hipsters (HOTC)");
         }
 
         if (settings.isSetPreviewsEnabled()) {

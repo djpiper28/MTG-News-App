@@ -29,11 +29,10 @@ public class CardSearchAndSorter {
     }
 
     private static String alphaNum(String str) {
-        String alphaNumerical = "qwertyuiopasdfghjklzxcvbnm ";
         StringBuilder output = new StringBuilder();
 
         for (String character : str.toLowerCase().split("")) {
-            if (alphaNumerical.contains(character)) {
+            if (character.matches("[a-zA-Z 0-9-]*")) {
                 output.append(character);
             }
         }
@@ -57,8 +56,8 @@ public class CardSearchAndSorter {
     private static List<Card> randomOrder(List<Card> cards) {
         List<Card> output = new LinkedList<>();
 
-        for (Card card: cards) {
-            output.add(random.nextInt(output.size()), card);
+        for (Card card : cards) {
+            output.add(random.nextInt(output.size() == 0 ? 1 : output.size()), card);
         }
 
         return output;
@@ -83,42 +82,47 @@ public class CardSearchAndSorter {
         List<Card> b = new LinkedList<>();
 
         for (Card card : cards) {
-            switch (sortBy) {
-                case CMC:
-                    if (card.getCmc() < pivot.getCmc()) {
-                        a.add(card);
-                    } else {
-                        b.add(card);
-                    }
-                    break;
-                case NAME:
-                    if (card.getName().compareTo(pivot.getName()) <= 0) {
-                        a.add(card);
-                    } else {
-                        b.add(card);
-                    }
-                    break;
-                case POWER:
-                    if (card.getPower().compareTo(pivot.getPower()) <= 0) {
-                        a.add(card);
-                    } else {
-                        b.add(card);
-                    }
-                    break;
-                case TOUGHNESS:
-                    if (card.getToughness().compareTo(pivot.getToughness()) <= 0) {
-                        a.add(card);
-                    } else {
-                        b.add(card);
-                    }
-                    break;
-                case COLLECTORS_NUMBER:
-                    if (card.getCollectorNumber().compareTo(pivot.getCollectorNumber()) <= 0) {
-                        a.add(card);
-                    } else {
-                        b.add(card);
-                    }
-                    break;
+            try {
+                switch (sortBy) {
+                    case CMC:
+                        if (card.getCmc() < pivot.getCmc()) {
+                            a.add(card);
+                        } else {
+                            b.add(card);
+                        }
+                        break;
+                    case NAME:
+                        if (card.getName().compareTo(pivot.getName()) <= 0) {
+                            a.add(card);
+                        } else {
+                            b.add(card);
+                        }
+                        break;
+                    case POWER:
+                        if (Integer.parseInt(card.getPower()) < Integer.parseInt(pivot.getPower())) {
+                            a.add(card);
+                        } else {
+                            b.add(card);
+                        }
+                        break;
+                    case TOUGHNESS:
+                        if (Integer.parseInt(card.getToughness()) < Integer.parseInt(pivot.getToughness())) {
+                            a.add(card);
+                        } else {
+                            b.add(card);
+                        }
+                        break;
+                    case COLLECTORS_NUMBER:
+                        if (card.getCollectorNumber().compareTo(pivot.getCollectorNumber()) <= 0) {
+                            a.add(card);
+                        } else {
+                            b.add(card);
+                        }
+                        break;
+                }
+            } catch (Exception e) {
+                //Not int
+                b.add(card);
             }
         }
 

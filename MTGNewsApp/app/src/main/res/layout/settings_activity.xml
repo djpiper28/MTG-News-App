@@ -89,14 +89,26 @@
 
                     <Switch
                         android:layout_marginTop="5sp"
+                        android:id="@+id/switchHipsters"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:padding="5sp"
+                        android:text="@string/hipsters_of_the_coast"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="@id/switchMTGGoldfish"
+                        app:layout_constraintTop_toBottomOf="@id/switchMTGGoldfish" />
+
+                    <Switch
+                        android:layout_marginTop="5sp"
                         android:id="@+id/switchSetPreviews"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:checked="true"
                         android:padding="5sp"
                         android:text="@string/set_previews"
-                        app:layout_constraintStart_toStartOf="@id/switchMTGGoldfish"
-                        app:layout_constraintTop_toBottomOf="@id/switchMTGGoldfish" />
+                        app:layout_constraintStart_toStartOf="@id/switchHipsters"
+                        app:layout_constraintTop_toBottomOf="@id/switchHipsters" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

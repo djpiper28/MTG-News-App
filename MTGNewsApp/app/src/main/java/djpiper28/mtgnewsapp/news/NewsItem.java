@@ -10,8 +10,8 @@ public class NewsItem {
     private String link;
     private String imageurl;
 
-    public NewsItem(final String title, final String description, final String author, final String publishedDate,
-                    final String link, final String image) {
+    public NewsItem(final String title, final String description, final String author,
+                    final String publishedDate, final String link, final String image) {
         this.setTitle(title);
         this.setDescription(description);
         this.setAuthor(author);

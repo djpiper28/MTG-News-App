@@ -25,6 +25,7 @@ import java.util.List;
 
 import djpiper28.mtgnewsapp.news.DailyMTGNewsGetter;
 import djpiper28.mtgnewsapp.news.EDHRECNewsGetter;
+import djpiper28.mtgnewsapp.news.HipstersNewsGetter;
 import djpiper28.mtgnewsapp.news.MTGGoldfishNewsGetter;
 import djpiper28.mtgnewsapp.news.NewsItem;
 import djpiper28.mtgnewsapp.news.NewsUpdateService;
@@ -40,7 +41,7 @@ public class LoadingScreen extends AppCompatActivity {
     public static final String[] SocialShares = {"twitter.com", "facebook.com", "instagram.com", "youtube.com", "twitch.tv", "discord.gg", "reddit.com"};
     public static final String[] Downloadable = {".docx", ".pdf", ".txt"};
     public static List<Runnable> onRefresh;
-    public static List<NewsItem> dailyMTGNews, EDHRECNews, MTGGoldfishNews;
+    public static List<NewsItem> dailyMTGNews, EDHRECNews, MTGGoldfishNews, hipstersNews;
     public static List<forohfor.scryfall.api.Set> sets;
     public static boolean reloadRequested = false;  // To try to fetch data less
     private static boolean started;
@@ -162,6 +163,41 @@ public class LoadingScreen extends AppCompatActivity {
                 }
             }
 
+            if (settings.isHipstersEnabled()) {
+                hipstersNews = new LinkedList<>();
+
+                HipstersNewsGetter newsGetter = null;
+                boolean gotNews = false;
+
+                while (!gotNews && a < 5) {
+                    try {
+                        newsGetter = new HipstersNewsGetter();
+                        if (bar != null) {
+                            hipstersNews = newsGetter.getNews((int articles, int max) -> {
+                                bar.setProgress(100 * (articles / max));
+                            });
+                        }
+                        gotNews = true;
+                    } catch (final Exception e) {
+                        e.printStackTrace();
+
+                        // Wait and hope the internet starts to work after the wait
+                        try {
+                            Thread.sleep(120);
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                    a++;
+                }
+
+                if (hipstersNews == null || !gotNews) {
+                    hipstersNews = settings.getHipstersNews();
+                } else {
+                    settings.setHipstersNews(hipstersNews);
+                }
+            }
+
             if (settings.isSetPreviewsEnabled()) {
                 a = 0;
                 boolean gotSets = false;
@@ -239,7 +275,7 @@ public class LoadingScreen extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e("ERROR", "startNewsRefreshService: error - service queuer crashed");
+                Log.e("ERROR", "startNewsRefreshService: error - service queer crashed blame auto correct lmao");
             }
         }, "refresh service starter thread")).start();
     }

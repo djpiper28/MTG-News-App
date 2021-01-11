@@ -17,19 +17,13 @@ import forohfor.scryfall.api.Set;
 
 public class Settings {
 
-    private transient static final long hour = 60 * 60 * 1000;
+    private transient static final long hour = 60L * 60L * 1000L;
     private int versionCode;
     private long updateEvery = 6L * 60L * 60L * 1000L;
-    private int primaryColour;
-    private int accentColour;
-    private boolean useCardsForNews;
-    private boolean dailyMTGEnabled;
-    private boolean setPreviewsEnabled;
-    private boolean EDHRECEnabled;
-    private boolean MTGGoldfishEnabled;
-    private boolean isDarkModeEnabled;
-    private boolean isBackgroundRefreshEnabled;
-    private List<NewsItem> dailyMTGNews, EDHRECNews, MTGGoldfishNews;
+    private int primaryColour, accentColour;
+    private boolean useCardsForNews, dailyMTGEnabled, setPreviewsEnabled, EDHRECEnabled,
+            MTGGoldfishEnabled, isDarkModeEnabled, isBackgroundRefreshEnabled, isHipstersEnabled;
+    private List<NewsItem> dailyMTGNews, EDHRECNews, MTGGoldfishNews, HipstersNews;
     private List<Set> sets;
     private long lastCacheUpdate;
 
@@ -153,11 +147,19 @@ public class Settings {
         return MTGGoldfishEnabled;
     }
 
+    public boolean isHipstersEnabled() {
+        return isHipstersEnabled;
+    }
+
+    public void setHipstersEnabled(boolean hipstersEnabled) {
+        this.isHipstersEnabled = hipstersEnabled;
+    }
+
     public void setMTGGoldfishEnabled(boolean MTGGoldfishEnabled) {
         this.MTGGoldfishEnabled = MTGGoldfishEnabled;
     }
 
-    public boolean isUseCardsForNews() {
+    public boolean useCardsForNews() {
         return useCardsForNews;
     }
 
@@ -195,6 +197,7 @@ public class Settings {
         setEDHRECNews(null);
         setSets(null);
         setMTGGoldfishNews(null);
+        setHipstersNews(null);
         setBackgroundRefreshEnabled(true);
         setLastCacheUpdate(System.currentTimeMillis());
     }
@@ -212,12 +215,18 @@ public class Settings {
             return (isDailyMTGEnabled() && dailyMTGNews == null) ||
                     (isEdhrecEnabled() && EDHRECNews == null) ||
                     (isMTGGoldfishEnabled() && MTGGoldfishNews == null) ||
-                    (isSetPreviewsEnabled() && sets == null);
+                    (isSetPreviewsEnabled() && sets == null) ||
+                    (isHipstersEnabled() && HipstersNews == null);
         }
     }
 
     public boolean isValid() {
-        return versionCode > 0 && updateEvery > 0 && dailyMTGNews != null && EDHRECNews != null && MTGGoldfishNews != null && sets != null;
+        return versionCode > 0 && updateEvery > 0 &&
+                ((isDailyMTGEnabled() && dailyMTGNews != null) ||
+                        (isEdhrecEnabled() && EDHRECNews != null) ||
+                        (isMTGGoldfishEnabled() && MTGGoldfishNews != null) ||
+                        (isSetPreviewsEnabled() && sets != null) ||
+                        (isHipstersEnabled() && HipstersNews != null));
     }
 
     public void applyDarkMode() {
@@ -234,5 +243,13 @@ public class Settings {
 
     public void setBackgroundRefreshEnabled(boolean backgroundRefreshEnabled) {
         isBackgroundRefreshEnabled = backgroundRefreshEnabled;
+    }
+
+    public List<NewsItem> getHipstersNews() {
+        return this.HipstersNews;
+    }
+
+    public void setHipstersNews(List<NewsItem> hipstersNews) {
+        this.HipstersNews = hipstersNews;
     }
 }

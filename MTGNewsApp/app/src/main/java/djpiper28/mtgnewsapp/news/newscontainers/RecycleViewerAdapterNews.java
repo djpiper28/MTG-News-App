@@ -34,7 +34,7 @@ public class RecycleViewerAdapterNews extends RecyclerView.Adapter<RecycleViewer
     public RecycleViewerAdapterNews(Context context, List<NewsItem> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
-        this.useCard = SettingsLoader.getSettingsLoader().getSettings().isUseCardsForNews();
+        this.useCard = SettingsLoader.getSettingsLoader().getSettings().useCardsForNews();
     }
 
     // inflates the row layout from xml when needed

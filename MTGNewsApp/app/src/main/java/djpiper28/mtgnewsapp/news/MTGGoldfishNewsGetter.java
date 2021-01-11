@@ -36,12 +36,10 @@ public class MTGGoldfishNewsGetter implements NewsGetterInterface {
 
                         String description = item.getElementsByTag("summary").get(0).text();
 
-                        String imageURL = "";//item.html().toString().split(Pattern.quote("<id>tag:www.mtggoldfish.com,2005:Article/"))[1].split(Pattern.quote("</id>"))[0];
-
                         output.add(new NewsItem(item.getElementsByTag("title").get(0).text(), description,
                                 item.getElementsByTag("name").get(0).text(),
                                 item.getElementsByTag("published").get(0).text().replace("T"," at ").replace("Z", ""),
-                                item.getElementsByTag("url").text(), imageURL));
+                                item.getElementsByTag("url").text(), ""));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

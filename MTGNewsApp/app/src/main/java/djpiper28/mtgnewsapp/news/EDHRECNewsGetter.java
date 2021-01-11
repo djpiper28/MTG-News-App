@@ -22,8 +22,8 @@ public class EDHRECNewsGetter implements NewsGetterInterface {
             List<NewsItem> output = new LinkedList<NewsItem>();
 
             try {
-                Connection conn = Jsoup.connect(site/*.replace("langcode", Locale.getDefault().getISO3Language().split("-")[0].toLowerCase())*/);
-                Document doc = conn/*.userAgent(user)*/.get();
+                Connection conn = Jsoup.connect(site);
+                Document doc = conn.get();
 
                 Elements items = doc.getElementsByTag("item");
 

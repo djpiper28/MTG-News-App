@@ -30,6 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
         ((Switch) findViewById(R.id.switchEDHRec)).setChecked(settings.isEdhrecEnabled());
         ((Switch) findViewById(R.id.switchDailyMTG)).setChecked(settings.isDailyMTGEnabled());
         ((Switch) findViewById(R.id.switchMTGGoldfish)).setChecked(settings.isMTGGoldfishEnabled());
+        ((Switch) findViewById(R.id.switchHipsters)).setChecked(settings.isHipstersEnabled());
 
         ((Switch) findViewById(R.id.EnableNewsRefresh)).setChecked(settings.isBackgroundRefreshEnabled());
 
@@ -37,8 +38,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         ((EditText) findViewById(R.id.cacheUpdateFrequency)).setText(String.valueOf(settings.getUpdateEvery()));
 
-        ((RadioButton) findViewById(R.id.radioButtonBigImage)).setChecked(!settings.isUseCardsForNews());
-        ((RadioButton) findViewById(R.id.radioButtonSmallImage)).setChecked(settings.isUseCardsForNews());
+        ((RadioButton) findViewById(R.id.radioButtonBigImage)).setChecked(!settings.useCardsForNews());
+        ((RadioButton) findViewById(R.id.radioButtonSmallImage)).setChecked(settings.useCardsForNews());
 
         Button primaryColourButton = findViewById(R.id.primaryColourButton);
         primaryColourButton.setOnClickListener(event -> {
@@ -74,6 +75,7 @@ public class SettingsActivity extends AppCompatActivity {
             settings.setEdhrecEnabled(((Switch) findViewById(R.id.switchEDHRec)).isChecked());
             settings.setDailyMTGEnabled(((Switch) findViewById(R.id.switchDailyMTG)).isChecked());
             settings.setMTGGoldfishEnabled(((Switch) findViewById(R.id.switchMTGGoldfish)).isChecked());
+            settings.setHipstersEnabled(((Switch) findViewById(R.id.switchHipsters)).isChecked());
             settings.setDarkModeEnabled(((Switch) findViewById(R.id.switchForceNightMode)).isChecked());
             settings.setUseCardsForNews(((RadioButton) findViewById(R.id.radioButtonSmallImage)).isChecked());
             settings.setBackgroundRefreshEnabled(((Switch) findViewById(R.id.EnableNewsRefresh)).isChecked());

@@ -67,6 +67,10 @@ public class RecycleViewerAdapterSets extends RecyclerView.Adapter<RecycleViewer
         View view = parent.itemView;
         ImageView setImage = view.findViewById(R.id.SetIcon);
 
+        if (set.getParentSetCode() == null || set.getParentSetCode().equals("")) {
+            ((CardView) parent.itemView.findViewById(R.id.CardView)).setPadding(40, 10, 10, 10);
+        }
+
         try {
             GlideToVectorYou
                     .init()

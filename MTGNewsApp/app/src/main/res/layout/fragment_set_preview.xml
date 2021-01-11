@@ -27,10 +27,10 @@
             android:contentDescription="Set preview icon"
             android:scaleType="centerCrop"
             android:src="@drawable/reload"
-            android:tint="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorAccent" />
 
         <TextView
             android:id="@+id/SetTitle"
